@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Define Page Header -->
+<head>
+  <meta charset="UTF-8">
+  <title>USA Fast Food Restaurant Analysis</title>
+
+  <!-- Import Page Style Sheets -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" />
+
+  <!-- Define Page Styling -->
+  <style>
+
+    /* Define Navigation Bar Styling */
+    .navbar-custom {background-color: white;}
+    .navbar-custom .navbar-brand {color: black; font-weight: bold}
+
+    /* Define Body Styling */
+    body {background-color: grey;}
+
+    /* Define Card Styling */
+    .card {margin-top: 10px; margin-bottom: 10px; border: 1px solid black;}
+    /* .card .table-responsive {margin: auto;} */
+
+    /* Define Styling for Different Page Sizes */
+    @media (min-width: 34em) {.card-columns {-webkit-column-count: 1; -moz-column-count: 1; column-count: 1;}}
+    @media (min-width: 48em) {.card-columns {-webkit-column-count: 1; -moz-column-count: 1; column-count: 1;}}
+    @media (min-width: 62em) {.card-columns {-webkit-column-count: 2; -moz-column-count: 2; column-count: 2;}}
+    @media (min-width: 75em) {.card-columns {-webkit-column-count: 2; -moz-column-count: 2; column-count: 2;}}
+
+    /* Define Card Header Styling */
+    .hr {margin-top: 1rem; margin-bottom: 1rem; border: 0; border-top: 1px solid black;}
+
+    /* Define Footer Styling */
+    .footer {background-color: white; color: black; font-weight: bold}
+  </style>
+</head>
+
+<!-- Define Page Body -->
+<body>
+    
+    <!-- Define Navigation Bar -->
+    <nav class = "navbar navbar-expand-md navbar-custom">
+        <div class = "container-fluid">
+
+            <!-- Define Navigation Bar Header -->
+            <div class = "navbar-header">
+                <a class = "navbar-brand" href = "#">USA Fast Food Restaurant Analysis</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Define Card Locations -->
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class = "card-body">
+                        <h2 class = "card-title text-center">Top Fast Food Restaurant Zip Codes<hr></h2>
+                        <h3 class = "text-center">No Data Available!</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class = "card-body">
+                        <h2 class = "card-title text-center">Top Fast Food Restaurant Chains<hr></h2>
+                        <h3 class = "text-center">No Data Available!</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class = "card-body">
+                        <h2 class = "card-title text-center">Fast Food Restaurant Zip Code Distribution<hr></h2>
+                        <h3 class = "text-center">No Data Available!</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class = "card-body">
+                        <h2 class = "card-title text-center">Fast Food Restaurant Chain Distribution<hr></h2>
+                        <h3 class = "text-center">No Data Available!</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Define Footer -->
+    <footer class="footer">
+        <div class = "container-fluid"></div>
+            <div class="footer-copyright text-center">©2020 MK</div>
+        </div>
+    </footer>
+</body>
+
+</html>

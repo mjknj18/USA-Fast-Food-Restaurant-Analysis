@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Define Page Header -->
+<head>
+  <meta charset="UTF-8">
+  <title>USA Fast Food Restaurant Analysis</title>
+
+  <!-- Import Page Style Sheets -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" />
+
+  <!-- Define Page Styling -->
+  <style>
+
+    /* Define Navigation Bar Styling */
+    .navbar-custom {background-color: white;}
+    .navbar-custom .navbar-brand {color: black; font-weight: bold}
+
+    /* Define Body Styling */
+    body {background-color: grey;}
+
+    /* Define Card Styling */
+    .card {margin-top: 10px; margin-bottom: 10px; border: 1px solid black;}
+    /* .card .table-responsive {margin: auto;} */
+
+    /* Define Styling for Different Page Sizes */
+    @media (min-width: 34em) {.card-columns {-webkit-column-count: 1; -moz-column-count: 1; column-count: 1;}}
+    @media (min-width: 48em) {.card-columns {-webkit-column-count: 1; -moz-column-count: 1; column-count: 1;}}
+    @media (min-width: 62em) {.card-columns {-webkit-column-count: 2; -moz-column-count: 2; column-count: 2;}}
+    @media (min-width: 75em) {.card-columns {-webkit-column-count: 2; -moz-column-count: 2; column-count: 2;}}
+
+    /* Define Card Header Styling */
+    .hr {margin-top: 1rem; margin-bottom: 1rem; border: 0; border-top: 1px solid black;}
+
+    /* Define Footer Styling */
+    .footer {background-color: white; color: black; font-weight: bold}
+  </style>
+</head>
+
+<!-- Define Page Body -->
+<body>
+
+    <!-- Define Navigation Bar -->
+    <nav class = "navbar navbar-expand-md navbar-custom">
+        <div class = "container-fluid">
+
+            <!-- Define Navigation Bar Header -->
+            <div class = "navbar-header">
+                <a class = "navbar-brand" href = "#">USA Fast Food Restaurant Analysis</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Define Card Locations -->
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class = "card-body">
+                        <h2 class = "card-title text-center">Top Fast Food Restaurant Zip Codes<hr></h2>
+                        <canvas id="bar_zip"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class = "card-body">
+                        <h2 class = "card-title text-center">Top Fast Food Restaurant Chains<hr></h2>
+                        <canvas id="bar_chains"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class = "card-body">
+                        <h2 class = "card-title text-center">Fast Food Restaurant Zip Code Distribution<hr></h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class = "card-body">
+                        <h2 class = "card-title text-center">Fast Food Restaurant Chain Distribution<hr></h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Define Footer -->
+    <footer class="footer">
+        <div class = "container-fluid"></div>
+            <div class="footer-copyright text-center">©2020 MK</div>
+        </div>
+    </footer>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet.js"></script>
+    <script>
+        var data = {{data.chart_data | safe}}
+
+        console.log('data')
+        console.log(data)
+
+        var zip_codes = []
+
+        for (var count_1 = 0; count_1 < data.length; count_1++){
+            zip_codes.push(data[count_1].postalCode)
+        }
+
+        console.log('zip codes')
+        console.log(zip_codes)
+
+        var unique_codes = []
+
+        if (zip_codes.length >= 10){
+            for (var count_2 = 0; count_2 < zip_codes.length; count_2++){
+                if (unique_codes.includes(zip_codes[count_2]) === false){
+                    unique_codes.push(zip_codes[count_2])
+                }
+            }
+        }
+        else {
+            unique_codes = zip_codes
+        }
+
+        console.log('unique codes')
+        console.log(unique_codes)
+
+        var unique_counts = []
+
+        for (var count_3 = 0; count_3 < unique_codes.length; count_3++){
+            var code_counter = 0
+
+            for (var count_4 = 0; count_4 < zip_codes.length; count_4++){
+                if (unique_codes[count_3] === zip_codes[count_4]){
+                    code_counter = code_counter + 1
+                }
+            }
+
+            unique_counts.push(code_counter)
+        }
+
+        console.log('unique counts')
+        console.log(unique_counts)
+
+        var bar_zips = []
+        var bar_counts = []
+        var current_max = unique_counts.reduce(function(a, b) {return Math.max(a, b)})
+        var previous_max = 0
+        var zip_index = 0
+
+        if (unique_counts.length >= 10){
+            for (var count_5 = 0; count_5 < unique_counts.length; count_5++){
+                if (bar_zips.length >= 10){
+                    while (current_max == previous_max){
+                        zip_index = unique_counts.indexOf(current_max)
+                        bar_zips.push(unique_codes[zip_index])
+                        bar_counts.push(current_max)
+
+                        unique_counts.splice(zip_index, 1, -1)
+
+                        previous_max = current_max
+                        current_max = unique_counts.reduce(function(a, b) {return Math.max(a, b)})
+                    }
+                }
+                else {
+                    while (bar_zips.length < 10){
+                        zip_index = unique_counts.indexOf(current_max)
+                        bar_zips.push(unique_codes[zip_index])
+                        bar_counts.push(current_max)
+
+                        unique_counts.splice(zip_index, 1, -1)
+
+                        previous_max = current_max
+                        current_max = unique_counts.reduce(function(a, b) {return Math.max(a, b)})
+                    }
+                }
+            }
+        }
+        else {
+            for (var count_6 = 0; count_6 < unique_counts.length; count_6++){
+                zip_index = unique_counts.indexOf(current_max)
+                bar_zips.push(unique_codes[zip_index])
+                bar_counts.push(current_max)
+
+                unique_counts.splice(zip_index, 1, -1)
+
+                previous_max = current_max
+                current_max = unique_counts.reduce(function(a, b) {return Math.max(a, b)})
+            }
+        }
+
+        console.log('bar zips')
+        console.log(bar_zips)
+        console.log('bar counts')
+        console.log(bar_counts)
+
+        var ctx_bar = document.getElementById('bar_zip').getContext('2d')
+
+        var bar_data = {
+			labels: bar_zips,
+			datasets: [{
+				data: bar_counts
+			}]}
+
+        var BarChart = new Chart(ctx_bar, {
+            type: 'bar',
+            data: bar_data,
+            options: options = {
+                scales: {
+                    xAxes: [{
+                        gridLines: {offsetGridLines: true}}]},
+                legend: {display: false},
+                scales: {
+                    yAxes: [{min: 0}]}
+        }});
+
+        var restaurant_names = []
+
+        for (var count_7 = 0; count_7 < data.length; count_7++){
+            restaurant_names.push(data[count_7].name.toUpperCase())
+        }
+
+        console.log('restaurant names')
+        console.log(restaurant_names)
+
+        var unique_restaurants = []
+
+        if (restaurant_names.length >= 10){
+            for (var count_8 = 0; count_8 < restaurant_names.length; count_8++){
+                if (unique_restaurants.includes(restaurant_names[count_8]) === false){
+                    unique_restaurants.push(restaurant_names[count_8])
+                }
+            }
+        }
+        else {
+            unique_restaurants = restaurant_names
+        }
+
+        console.log('unique restaurants')
+        console.log(unique_restaurants)
+
+        var restaurant_counts = []
+
+        for (var count_9 = 0; count_9 < unique_restaurants.length; count_9++){
+            var type_counter = 0
+
+            for (var count_10 = 0; count_10 < restaurant_names.length; count_10++){
+                if (unique_restaurants[count_9] === restaurant_names[count_10]){
+                    type_counter = type_counter + 1
+                }
+            }
+
+            restaurant_counts.push(type_counter)
+        }
+
+        console.log('restaurant counts')
+        console.log(restaurant_counts)
+
+        var bar_type = []
+        var bar_count = []
+        var current_max = restaurant_counts.reduce(function(a, b) {return Math.max(a, b)})
+        var previous_max = 0
+        var type_index = 0
+
+        if (restaurant_counts.length >= 10){
+            for (var count_11 = 0; count_11 < restaurant_counts.length; count_11++){
+                if (bar_type.length >= 10){
+                    while (current_max == previous_max){
+                        type_index = restaurant_counts.indexOf(current_max)
+                        bar_type.push(unique_restaurants[type_index])
+                        bar_count.push(current_max)
+
+                        restaurant_counts.splice(type_index, 1, -1)
+
+                        previous_max = current_max
+                        current_max = restaurant_counts.reduce(function(a, b) {return Math.max(a, b)})
+                    }
+                }
+                else {
+                    while (bar_type.length < 10){
+                        type_index = restaurant_counts.indexOf(current_max)
+                        bar_type.push(unique_restaurants[type_index])
+                        bar_count.push(current_max)
+
+                        restaurant_counts.splice(type_index, 1, -1)
+
+                        previous_max = current_max
+                        current_max = restaurant_counts.reduce(function(a, b) {return Math.max(a, b)})
+                    }
+                }
+            }
+        }
+        else {
+            for (var count_12 = 0; count_12 < restaurants_counts.length; count_12++){
+                type_index = restaurant_counts.indexOf(current_max)
+                bar_type.push(unique_restaurants[type_index])
+                bar_count.push(current_max)
+
+                restaurant_counts.splice(type_index, 1, -1)
+
+                previous_max = current_max
+                current_max = restaurant_counts.reduce(function(a, b) {return Math.max(a, b)})
+            }
+        }
+
+        console.log('bar type')
+        console.log(bar_type)
+        console.log('bar count')
+        console.log(bar_count)
+
+        var ctx_bar = document.getElementById('bar_chains').getContext('2d')
+
+        var bar_data = {
+			labels: bar_type,
+			datasets: [{
+				data: bar_count
+			}]}
+
+        var BarChart = new Chart(ctx_bar, {
+            type: 'bar',
+            data: bar_data,
+            options: options = {
+                scales: {
+                    xAxes: [{
+                        gridLines: {offsetGridLines: true}}]},
+                legend: {display: false},
+                scales: {
+                    yAxes: [{min: 0}]}
+        }});
+    </script>
+</body>
+
+</html>
