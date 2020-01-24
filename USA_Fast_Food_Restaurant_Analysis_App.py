@@ -21,128 +21,337 @@ pg_password = ''
 #Define PostgreSQL Database Engine
 engine = create_engine('postgresql://' + pg_password + '@localhost:5432/fast_food_db')
 
-#Define Path for App Home Screen
+#Define Path for USA Fast Food Route
 @app.route('/', methods = ['GET'])
 
-#Define Function for Home Screen Content
+#Define Function for Dashboard Content
 def api_home():
 
+    #Import USA Fast Food Data Table from SQL DB as Pandas Data Frame
     USA_food = pd.read_sql('SELECT * FROM "USA_Fast_Food"', engine)
 
+    #Convert Data Frame to Dictionary & Convert Dictionary to JSON Object
     full_data = json.dumps(USA_food.to_dict(orient='records'), indent = 2)
 
+    #Add JSON Object to Dictionary
     data = {'chart_data': full_data}
-
+    
+    #Call HTML File & Pass in Dictionary with JSON Object
     return render_template("index_data.html", data = data)
 
+#Define Path for State Fast Food Routes
 @app.route('/<state>', methods = ['GET'])
 
+#Define Function for Dashboard Content
 def api_state(state):
 
+    #Create Variable for SQL DB Table Data & Assign Default Value of Blank Data Frame
     state_food = pd.DataFrame()
 
-    if state == "AL":
+    #Set Condition for Alabama Route
+    if state.upper() == "AL":
+
+        #Import Alabama Fast Food Data Table from SQL DB as Pandas Data Frame
         state_food = pd.read_sql('SELECT * FROM "AL_Fast_Food"', engine)
-    elif state == "AK":
+
+    #Set Condition for Alaska Route
+    elif state.upper() == "AK":
+
+        #Import Alaska Fast Food Data Table from SQL DB as Pandas Data Frame
         state_food = pd.read_sql('SELECT * FROM "AK_Fast_Food"', engine)
-    elif state == "AZ":
+
+    #Set Condition for Arizona Route
+    elif state.upper() == "AZ":
+
+        #Import Arizona Fast Food Data Table from SQL DB as Pandas Data Frame
         state_food = pd.read_sql('SELECT * FROM "AZ_Fast_Food"', engine)
-    elif state == "AR":
+
+    #Set Condition for Arkansas Route
+    elif state.upper() == "AR":
+
+        #Import Arkansas Fast Food Data Table from SQL DB as Pandas Data Frame
         state_food = pd.read_sql('SELECT * FROM "AR_Fast_Food"', engine)
-    elif state == "CA":
+
+    #Set Condition for California Route
+    elif state.upper() == "CA":
+
+        #Import California Fast Food Data Table from SQL DB as Pandas Data Frame
         state_food = pd.read_sql('SELECT * FROM "CA_Fast_Food"', engine)
-    elif state == "CO":
+
+    #Set Condition for Colorado Route
+    elif state.upper() == "CO":
+
+        #Import Colorado Fast Food Data Table from SQL DB as Pandas Data Frame
         state_food = pd.read_sql('SELECT * FROM "CO_Fast_Food"', engine)
-    elif state == "CT":
+
+    #Set Condition for Conneticut Route
+    elif state.upper() == "CT":
+
+        #Import Connecticut Fast Food Data Table from SQL DB as Pandas Data Frame
         state_food = pd.read_sql('SELECT * FROM "CT_Fast_Food"', engine)
-    elif state == "DE":
+
+    #Set Condition for Delaware Route
+    elif state.upper() == "DE":
+
+        #Import Delaware Fast Food Data Table from SQL DB as Pandas Data Frame
         state_food = pd.read_sql('SELECT * FROM "DE_Fast_Food"', engine)
-    elif state == "FL":
+
+    #Set Condition for Florida Route
+    elif state.upper() == "FL":
+
+        #Import Florida Fast Food Data Table from SQL DB as Pandas Data Frame
         state_food = pd.read_sql('SELECT * FROM "FL_Fast_Food"', engine)
-    elif state == "GA":
+
+    #Set Condition for Georgia Route
+    elif state.upper() == "GA":
+
+        #Import Georgia Fast Food Data Table from SQL DB as Pandas Data Frame
         state_food = pd.read_sql('SELECT * FROM "GA_Fast_Food"', engine)
-    elif state == "HI":
+
+    #Set Condition for Hawaii Route
+    elif state.upper() == "HI":
+
+        #Import Hawaii Fast Food Data Table from SQL DB as Pandas Data Frame
         state_food = pd.read_sql('SELECT * FROM "HI_Fast_Food"', engine)
-    elif state == "ID":
+
+    #Set Condition for Idaho Route
+    elif state.upper() == "ID":
+
+        #Import Idaho Fast Food Data Table from SQL DB as Pandas Data Frame
         state_food = pd.read_sql('SELECT * FROM "ID_Fast_Food"', engine)
-    elif state == "IL":
+
+    #Set Condition for Illinois Route
+    elif state.upper() == "IL":
+
+        #Import Illinois Fast Food Data Table from SQL DB as Pandas Data Frame
         state_food = pd.read_sql('SELECT * FROM "IL_Fast_Food"', engine)
-    elif state == "IN":
+
+    #Set Condition for Indiana Route
+    elif state.upper() == "IN":
+
+        #Import Indiana Fast Food Data Table from SQL DB as Pandas Data Frame
         state_food = pd.read_sql('SELECT * FROM "IN_Fast_Food"', engine)
-    elif state == "IA":
+
+    #Set Condition for Iowa Route
+    elif state.upper() == "IA":
+
+        #Import Iowa Fast Food Data Table from SQL DB as Pandas Data Frame
         state_food = pd.read_sql('SELECT * FROM "IA_Fast_Food"', engine)
-    elif state == "KS":
+
+    #Set Condition for Kansas Route
+    elif state.upper() == "KS":
+
+        #Import Kansas Fast Food Data Table from SQL DB as Pandas Data Frame
         state_food = pd.read_sql('SELECT * FROM "KS_Fast_Food"', engine)
-    elif state == "KY":
+
+    #Set Condition for Kentucky Route
+    elif state.upper() == "KY":
+
+        #Import Kentucky Fast Food Data Table from SQL DB as Pandas Data Frame
         state_food = pd.read_sql('SELECT * FROM "KY_Fast_Food"', engine)
-    elif state == "LA":
+
+    #Set Condition for Louisiana Route
+    elif state.upper() == "LA":
+
+        #Import Louisiana Fast Food Data Table from SQL DB as Pandas Data Frame
         state_food = pd.read_sql('SELECT * FROM "LA_Fast_Food"', engine)
-    elif state == "ME":
+
+    #Set Condition for Maine Route
+    elif state.upper() == "ME":
+
+        #Import Maine Fast Food Data Table from SQL DB as Pandas Data Frame
         state_food = pd.read_sql('SELECT * FROM "ME_Fast_Food"', engine)
-    elif state == "MD":
+
+    #Set Condition for Maryland Route
+    elif state.upper() == "MD":
+
+        #Import Maryland Fast Food Data Table from SQL DB as Pandas Data Frame
         state_food = pd.read_sql('SELECT * FROM "MD_Fast_Food"', engine)
-    elif state == "MA":
+
+    #Set Condition for Massachusetts Route
+    elif state.upper() == "MA":
+
+        #Import Massachusetts Fast Food Data Table from SQL DB as Pandas Data Frame
         state_food = pd.read_sql('SELECT * FROM "MA_Fast_Food"', engine)
-    elif state == "MI":
+
+    #Set Condition for Michigan Route
+    elif state.upper() == "MI":
+
+        #Import Michigan Fast Food Data Table from SQL DB as Pandas Data Frame
         state_food = pd.read_sql('SELECT * FROM "MI_Fast_Food"', engine)
-    elif state == "MN":
+
+    #Set Condition for Minnesota Route
+    elif state.upper() == "MN":
+
+        #Import Minnesota Fast Food Data Table from SQL DB as Pandas Data Frame
         state_food = pd.read_sql('SELECT * FROM "MN_Fast_Food"', engine)
-    elif state == "MS":
+
+    #Set Condition for Mississippi Route 
+    elif state.upper() == "MS":
+
+        #Import Mississippi Fast Food Data Table from SQL DB as Pandas Data Frame
         state_food = pd.read_sql('SELECT * FROM "MS_Fast_Food"', engine)
-    elif state == "MO":
+
+    #Set Condition for Missouri Route
+    elif state.upper() == "MO":
+
+        #Import Missouri Fast Food Data Table from SQL DB as Pandas Data Frame
         state_food = pd.read_sql('SELECT * FROM "MO_Fast_Food"', engine)
-    elif state == "MT":
+
+    #Set Condiiton for Montana Route 
+    elif state.upper() == "MT":
+
+        #Import Montana Fast Food Data Table from SQL DB as Pandas Data Frame
         state_food = pd.read_sql('SELECT * FROM "MT_Fast_Food"', engine)
-    elif state == "NE":
+
+    #Set Condition for Nebraska Route
+    elif state.upper() == "NE":
+
+        #Import Nebraska Fast Food Data Table from SQL DB as Pandas Data Frame
         state_food = pd.read_sql('SELECT * FROM "NE_Fast_Food"', engine)
-    elif state == "NV":
+
+    #Set Condition for Nevada Route
+    elif state.upper() == "NV":
+
+        #Import Nevada Fast Food Data Table from SQL DB as Pandas Data Frame
         state_food = pd.read_sql('SELECT * FROM "NV_Fast_Food"', engine)
-    elif state == "NH":
+
+    #Set Condition for New Hampshire Route
+    elif state.upper() == "NH":
+
+        #Import New Hampshire Fast Food Data Table from SQL DB as Pandas Data Frame
         state_food = pd.read_sql('SELECT * FROM "NH_Fast_Food"', engine)
-    elif state == "NJ":
+
+    #Set Condition for New Jersey Route
+    elif state.upper() == "NJ":
+
+        #Import New Jersey Fast Food Data Table from SQL DB as Pandas Data Frame
         state_food = pd.read_sql('SELECT * FROM "NJ_Fast_Food"', engine)
-    elif state == "NM":
+
+    #Set Condition for New Mexico Route
+    elif state.upper() == "NM":
+
+        #Import New Mexico Fast Food Data Table from SQL DB as Pandas Data Frame
         state_food = pd.read_sql('SELECT * FROM "NM_Fast_Food"', engine)
-    elif state == "NY":
+
+    #Set Condition for New York Route
+    elif state.upper() == "NY":
+
+        #Import New York Fast Food Data Table from SQL DB as Pandas Data Frame
         state_food = pd.read_sql('SELECT * FROM "NJ_Fast_Food"', engine)
-    elif state == "NC":
+
+    #Set Condition for North Carolina Route
+    elif state.upper() == "NC":
+
+        #Import North Carolina Fast Food Data Table from SQL DB as Pandas Data Frame
         state_food = pd.read_sql('SELECT * FROM "NC_Fast_Food"', engine)
-    elif state == "ND":
+
+    #Set Condition North Dakota Route
+    elif state.upper() == "ND":
+
+        #Import North Dakota Fast Food Data Table from SQL DB as Pandas Data Frame
         state_food = pd.read_sql('SELECT * FROM "ND_Fast_Food"', engine)
-    elif state == "OH":
+
+    #Set Condition for Ohio Route
+    elif state.upper() == "OH":
+
+        #Import Ohio Fast Food Data Table from SQL DB as Pandas Data Frame
         state_food = pd.read_sql('SELECT * FROM "OH_Fast_Food"', engine)
-    elif state == "OK":
+    
+    #Set Condition for Oklahoma Route
+    elif state.upper() == "OK":
+
+        #Import Oklahoma Fast Food Data Table from SQL DB as Pandas Data Frame
         state_food = pd.read_sql('SELECT * FROM "OK_Fast_Food"', engine)
-    elif state == "OR":
+
+    #Set Condition for Oregon Route
+    elif state.upper() == "OR":
+
+        #Import Oregon Fast Food Data Table from SQL DB as Pandas Data Frame
         state_food = pd.read_sql('SELECT * FROM "OR_Fast_Food"', engine)
-    elif state == "PA":
+
+    #Set Condition for Pennsylvania Route
+    elif state.upper() == "PA":
+
+        #Import Pennsylvania Fast Food Data Table from SQL DB as Pandas Data Frame
         state_food = pd.read_sql('SELECT * FROM "PA_Fast_Food"', engine)
-    elif state == "RI":
+
+    #Set Condition for Rhode Island Route
+    elif state.upper() == "RI":
+
+        #Import Rhode Island Fast Food Data Table from SQL DB as Pandas Data Frame
         state_food = pd.read_sql('SELECT * FROM "RI_Fast_Food"', engine)
-    elif state == "SC":
+
+    #Set Condition for South Carolina Route
+    elif state.upper() == "SC":
+
+        #Import South Carolina Fast Food Data Table from SQL DB as Pandas Data Frame
         state_food = pd.read_sql('SELECT * FROM "SC_Fast_Food"', engine)
-    elif state == "SD":
+
+    #Set Condition for South Dakota Route
+    elif state.upper() == "SD":
+
+        #Import South Dakota Fast Food Data Table from SQL DB as Pandas Data Frame
         state_food = pd.read_sql('SELECT * FROM "SD_Fast_Food"', engine)
-    elif state == "TN":
+
+    #Set Condition for Tennessee Route
+    elif state.upper() == "TN":
+
+        #Import Tennessee Fast Food Data Table from SQL DB as Pandas Data Frame
         state_food = pd.read_sql('SELECT * FROM "TN_Fast_Food"', engine)
-    elif state == "TX":
+
+    #Set Condition for Texas Route
+    elif state.upper() == "TX":
+
+        #Import Texas Fast Food Data Table from SQL DB as Pandas Data Frame
         state_food = pd.read_sql('SELECT * FROM "TX_Fast_Food"', engine)
-    elif state == "UT":
+
+    #Set Condition for Utah Route
+    elif state.upper() == "UT":
+
+        #Import Utah Fast Food Data Table from SQL DB as Pandas Data Frame
         state_food = pd.read_sql('SELECT * FROM "UT_Fast_Food"', engine)
-    elif state == "VT":
+
+    #Set Condition for Vermont Route
+    elif state.upper() == "VT":
+
+        #Import Vermont Fast Food Data Table from SQL DB as Pandas Data Frame
         state_food = pd.read_sql('SELECT * FROM "VT_Fast_Food"', engine)
-    elif state == "VA":
+    
+    #Set Condition for Virginia Route
+    elif state.upper() == "VA":
+
+        #Import Virginia Fast Food Data Table from SQL DB as Pandas Data Frame
         state_food = pd.read_sql('SELECT * FROM "VA_Fast_Food"', engine)
-    elif state == "WA":
+    
+    #Set Condition for Washington Route
+    elif state.upper() == "WA":
+
+        #Import Washington Fast Food Data Table from SQL DB as Pandas Data Frame
         state_food = pd.read_sql('SELECT * FROM "WA_Fast_Food"', engine)
-    elif state == "WV":
+
+    #Set Condition for West Virginia Route
+    elif state.upper() == "WV":
+
+        #Import West Virginia Fast Food Data Table from SQL DB as Pandas Data Frame
         state_food = pd.read_sql('SELECT * FROM "WV_Fast_Food"', engine)
-    elif state == "WI":
+
+    #Set Condition for Wisconsin Route
+    elif state.upper() == "WI":
+
+        #Import Wisconsin Fast Food Data Table from SQL DB as Pandas Data Frame
         state_food = pd.read_sql('SELECT * FROM "WI_Fast_Food"', engine)
-    elif state == "WY":
+
+    #Set Condition for Wyoming Route
+    elif state.upper() == "WY":
+
+        #Import Wyoming Fast Food Data Table from SQL DB as Pandas Data Frame
         state_food = pd.read_sql('SELECT * FROM "WY_Fast_Food"', engine)
 
+    #Set Condition for Empty Data Frame
     if state_food.empty == True:
+
+        #
         return render_template("index_blank.html", data = state)
     else:
         partial_data = json.dumps(state_food.to_dict(orient='records'), indent = 2)
