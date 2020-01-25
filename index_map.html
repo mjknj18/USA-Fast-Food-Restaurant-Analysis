@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Define Page Header -->
+<head>
+  <meta charset="UTF-8">
+  <title>USA Fast Food Restaurant Analysis</title>
+
+  <!-- Import Page Style Sheets -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet.js"></script>
+
+  <style>
+      body {
+        padding: 0;
+        margin: 0;
+        }
+
+        /* set map, body, and html to 100% of the screen size */
+        #map,
+        body,
+        html {
+        height: 100%;
+        }
+
+        h1 {
+        text-align: center;
+        }
+  </style>
+</head>
+
+<!-- Define Page Body -->
+<body>
+    <div id = "map"></div>
+
+    <script>
+        var data = {{data.chart_data | safe}}
+        // Define Satellite Map Layer
+        var satellitemap = L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
+            attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
+            maxZoom: 18,
+            id: "mapbox.satellite",
+            accessToken: "pk.eyJ1IjoibWprbmoxOCIsImEiOiJjazVlaDlqNm4wNHoxM2ZwYnhxY3A5dXhnIn0.KAhQiVsQFvYLRjLUkKC1OQ"});
+
+        // Define Outdoors Map Layer
+        var outdoorsmap = L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
+            attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
+            maxZoom: 18,
+            id: "mapbox.outdoors",
+            accessToken: "pk.eyJ1IjoibWprbmoxOCIsImEiOiJjazVlaDlqNm4wNHoxM2ZwYnhxY3A5dXhnIn0.KAhQiVsQFvYLRjLUkKC1OQ"});
+
+        // Define Dark Map Layer
+        var darkmap = L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
+            attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
+            maxZoom: 18,
+            id: "mapbox.dark",
+            accessToken: "pk.eyJ1IjoibWprbmoxOCIsImEiOiJjazVlaDlqNm4wNHoxM2ZwYnhxY3A5dXhnIn0.KAhQiVsQFvYLRjLUkKC1OQ"});
+
+        // Define Light Map Layer
+        var lightmap = L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
+            attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
+            maxZoom: 18,
+            id: "mapbox.light",
+            accessToken: "pk.eyJ1IjoibWprbmoxOCIsImEiOiJjazVlaDlqNm4wNHoxM2ZwYnhxY3A5dXhnIn0.KAhQiVsQFvYLRjLUkKC1OQ"});
+
+        // Define Array of Available Maps
+        var baseMaps = {
+            "Outdoors Map": outdoorsmap,
+            "Satellite Map": satellitemap,
+            "Dark Map": darkmap,
+            "Light Map" : lightmap};
+        
+        // Define variables for coordinates and zoom level that will be used to switch between selected states
+        var center_coords = []
+        var zoom_level = []
+
+        // Create an if statement that checks if the state abbreviation matches the selected flask route, and displays correct state coordinates
+        if (data[0].province === "AL" && data[data.length - 1].province === "AL"){
+            center_coords = [32.50, -86.38];
+            zoom_level = [7]
+        }
+        else if (data[0].province === "AK"){
+            center_coords = [64.06, -152.27];
+            zoom_level = [4]
+        }
+        else if (data[0].province === "AZ"){
+            center_coords = [34.27, -111.66];
+            zoom_level = [7]
+        }
+        else if (data[0].province === "AR"){
+            center_coords = [34.89, -92.44];
+            zoom_level = [7]
+        }
+        else if (data[0].province === "CA"){
+            center_coords = [37.18, -119.46];
+            zoom_level = [6]
+        }
+        else if (data[0].province === "CO" && data[data.length - 1].province === "CO"){
+            center_coords = [38.99, -105.54];
+            zoom_level = [7]
+        }
+        else if (data[0].province === "CT"){
+            center_coords = [41.62, -72.72];
+            zoom_level = [9]
+        }
+        else if (data[0].province === "DE"){
+            center_coords = [38.98, -75.50];
+            zoom_level = [8]
+        }
+        else if (data[0].province === "DC"){
+            center_coords = [38.91, -77.01];
+            zoom_level = [10]
+        }
+        else if (data[0].province === "FL"){
+            center_coords = [28.63,-82.44];
+            zoom_level = [6]
+        }
+        else if (data[0].province === "GA"){
+            center_coords = [32.64, -83.44];
+            zoom_level = [7]
+        }
+        else if (data[0].province === "HI"){
+            center_coords = [20.29,-156.37];
+            zoom_level = [7]
+        }
+        else if (data[0].province === "ID"){
+            center_coords = [44.35,-114.61];
+            zoom_level = [6]
+        }
+        else if (data[0].province === "IL"){
+            center_coords = [40.04, -89.19];
+            zoom_level = [7]
+        }
+        else if (data[0].province === "IN"){
+            center_coords = [39.89,-86.28];
+            zoom_level = [7]
+        }
+        else if (data[0].province === "IA"){
+            center_coords = [42.07,-93.49];
+            zoom_level = [7]
+        }
+        else if (data[0].province === "KS"){
+            center_coords = [38.49,-98.38];
+            zoom_level = [7]
+        }
+        else if (data[0].province === "KY"){
+            center_coords = [37.53,-85.30];
+            zoom_level = [7]
+        }
+        else if (data[0].province === "LA"){
+            center_coords = [31.06,-91.99];
+            zoom_level = [7]
+        }
+        else if (data[0].province === "ME"){
+            center_coords = [45.36,-69.24];
+            zoom_level = [7]
+        }
+        else if (data[0].province === "MD"){
+            center_coords = [39.05,-76.79];
+            zoom_level = [8]
+        }
+        else if (data[0].province === "MA"){
+            center_coords = [42.25,-71.80];
+            zoom_level = [8]
+        }
+        else if (data[0].province === "MI"){
+            center_coords = [44.34,-85.41];
+            zoom_level = [7]
+        }
+        else if (data[0].province === "MN"){
+            center_coords = [46.28,-94.30];
+            zoom_level = [6]
+        }
+        else if (data[0].province === "MS"){
+            center_coords = [32.73,-89.66];
+            zoom_level = [7]
+        }
+        else if (data[0].province === "MO"){
+            center_coords = [38.35,-92.45];
+            zoom_level = [7]
+        }
+        else if (data[0].province === "MT"){
+            center_coords = [47.05,-109.63];
+            zoom_level = [6]
+        }
+        else if (data[0].province === "NE"){
+            center_coords = [41.53,-99.79];
+            zoom_level = [7]
+        }
+        else if (data[0].province === "NV"){
+            center_coords = [39.32,-116.63];
+            zoom_level = [6]
+        }
+        else if (data[0].province === "NH"){
+            center_coords = [43.68,-71.58];
+            zoom_level = [8]
+        }
+        else if (data[0].province === "NJ"){
+            center_coords = [40.19, -74.67];
+            zoom_level = [8]
+        }
+        else if (data[0].province === "NM"){
+            center_coords = [34.40,-106.11];
+            zoom_level = [6]
+        }
+        else if (data[0].province === "NY"){
+            center_coords = [42.95,-75.52];
+            zoom_level = [7]
+        }
+        else if (data[0].province === "NC"){
+            center_coords = [35.55,-79.38];
+            zoom_level = [7]
+        }
+        else if (data[0].province === "ND"){
+            center_coords = [47.45,-100.46];
+            zoom_level = [7]
+        }
+        else if (data[0].province === "OH"){
+            center_coords = [40.28,-82.79];
+            zoom_level = [7]
+        }
+        else if (data[0].province === "OK"){
+            center_coords = [35.58,-97.49];
+            zoom_level = [7]
+        }
+        else if (data[0].province === "OR"){
+            center_coords = [43.93,-120.55];
+            zoom_level = [7]
+        }
+        else if (data[0].province === "PA"){
+            center_coords = [40.87,-77.79];
+            zoom_level = [7]
+        }
+        else if (data[0].province === "RI"){
+            center_coords = [41.67,-71.55];
+            zoom_level = [10]
+        }
+        else if (data[0].province === "SC"){
+            center_coords = [33.91,-80.89];
+            zoom_level = [7]
+        }
+        else if (data[0].province === "SD"){
+            center_coords = [44.44,-100.22];
+            zoom_level = [7]
+        }
+        else if (data[0].province === "TN"){
+            center_coords = [35.85,-86.35];
+            zoom_level = [7]
+        }
+        else if (data[0].province === "TX"){
+            center_coords = [31.47, -99.33];
+            zoom_level = [6]
+        }
+        else if (data[0].province === "UT"){
+            center_coords = [39.30,-111.67];
+            zoom_level = [7]
+        }
+        else if (data[0].province === "VT"){
+            center_coords = [44.06,-72.66];
+            zoom_level = [8]
+        }
+        else if (data[0].province === "VA"){
+            center_coords = [37.52,-78.85];
+            zoom_level = [7]
+        }
+        else if (data[0].province === "WA"){
+            center_coords = [47.38,-120.44];
+            zoom_level = [7]
+        }
+        else if (data[0].province === "WV"){
+            center_coords = [38.64,-80.62];
+            zoom_level = [7]
+        }
+        else if (data[0].province === "WI"){
+            center_coords = [44.62,-89.99];
+            zoom_level = [7]
+        }
+        else if (data[0].province === "WY"){
+            center_coords = [42.99,-107.55];
+            zoom_level = [7]
+        }
+        else {
+            center_coords = [37.09, -95.71]
+            zoom_level = [3]
+        }
+
+        // Define Map Object
+        var myMap = L.map("map", {
+            center: center_coords,
+            zoom: zoom_level,
+            layers: [outdoorsmap]});
+
+        // Add Map Layers & Data Layer to Map Object
+        L.control.layers(baseMaps).addTo(myMap);
+
+        // Define a loop that creates markers and popups for each set of coordinates within the selected state
+        for (var i = 0; i < data.length; i++) {
+            var marker = L.marker([data[i].latitude, data[i].longitude], {
+                draggable: true,
+                title: data[i].name})
+            
+            marker.bindPopup("<h1>" + data[i].name + "</h1> <hr> <h3>Address: " + data[i].address + "</h3> <hr> <h3>City: " + data[i].city + "</h3> <hr> <h3>State: " + data[i].province + "</h3> <hr> <h3>Zip: " + data[i].postalCode)
+
+            marker.addTo(myMap)
+        }
+
+    </script>
+</body>
+
+</html>
