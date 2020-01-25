@@ -255,7 +255,7 @@
                     }
                     else {
 
-                        // Keep Looping Until Chart Zip Code Counts Array has 10 Values
+                        // Keep Looping Until Chart Zip Codes Array has 10 Values
                         while (chart_zips.length < 10){
 
                             // Find Index of Current Maximum Zip Code Count
@@ -312,7 +312,7 @@
             // Define Variable for HTML Chart Container
             var ctx_bar = document.getElementById('zip_chart').getContext('2d')
 
-            // Define Dictionary for Zip Code Bar Chart Data & Labels
+            // Create Dictionary of Zip Code Bar Chart Data & Labels
             var chart_data = {
                 labels: chart_zips,
                 datasets: [{data: chart_counts}]}
@@ -425,28 +425,52 @@
                         }
                     }
                     else {
+
+                        // Keep Looping Until Chart Restaurant Name Array has 10 Values
                         while (chart_type.length < 10){
+
+                            // Find Index of Current Maximum Restaurant Name Count
                             type_index = restaurant_counts.indexOf(current_max)
+
+                            // Add Unique Restaurant Name to Chart Restaurant Names Array
                             chart_type.push(unique_restaurants[type_index])
+
+                            // Add Current Maximum Restaurant Name Count to Chart Restaurant Name Counts Array
                             chart_count.push(current_max)
 
+                            // Replace Current Restaurant Name Count with Default Value
                             restaurant_counts.splice(type_index, 1, -1)
 
+                            // Set Previous Maximum Restaurant Name Count Equal to Current Maximum Restaurant Name Count
                             previous_max = current_max
+
+                            // Find New Maximum Restaurant Name Count
                             current_max = restaurant_counts.reduce(function(a, b) {return Math.max(a, b)})
                         }
                     }
                 }
             }
             else {
+
+                // Loop Through Counts in Unique Restaurant Name Counts Array
                 for (var count_12 = 0; count_12 < restaurant_counts.length; count_12++){
+
+                    // Find Index of Current Maximum Restaurant Name Count
                     type_index = restaurant_counts.indexOf(current_max)
+
+                    // Add Unique Restaurant Name to Chart Restaurant Names Array
                     chart_type.push(unique_restaurants[type_index])
+
+                    // Add Current Maximum Restaurant Name Count to Chart Restaurant Name Counts Array
                     chart_count.push(current_max)
 
+                    // Replace Current Restaurant Name Count with Default Value
                     restaurant_counts.splice(type_index, 1, -1)
 
+                    // Set Previous Maximum Restaurant Name Count Equal to Current Maximum Restaurant Name Count
                     previous_max = current_max
+
+                    // Find New Maximum Restaurant Name Count
                     current_max = restaurant_counts.reduce(function(a, b) {return Math.max(a, b)})
                 }
             }
@@ -456,41 +480,53 @@
             console.log('bar count')
             console.log(chart_count)
 
+            // Define Variable for HTML Chart Container
             var ctx_bar = document.getElementById('chains_chart').getContext('2d')
 
+            // Create Dictionary of Restaurant Name Bar Chart Data & Labels
             var chart_data = {
                 labels: chart_type,
                 datasets: [{data: chart_count}]}
 
+            // Define Variable for Restaurant Name Bar Chart Object
             var Chart_2 = new Chart(ctx_bar, {
                 type: 'bar',
                 data: chart_data,
                 options: options = {
-                    scales: {
-                        xAxes: [{
-                            gridLines: {offsetGridLines: true}}]},
+                    scales: {xAxes: [{gridLines: {offsetGridLines: true}}]},
                     legend: {display: false},
-                    scales: {
-                        yAxes: [{min: 0}]}
-            }});
+                    scales: {yAxes: [{min: 0}]}}});
 
+            // Return Bar Chart Objects
             return [Chart_1, Chart_2]
         }
 
+        // Define Function for Pie Chart Generation
         function pie_chart(data){
+
+            // Define Array for Zip Codes
             var zip_codes = []
 
+            // Loop Through Items in Imported Data
             for (var count_1 = 0; count_1 < data.length; count_1++){
+
+                // Extract Zip Code from Each Item & Add to Zip Code Array
                 zip_codes.push(data[count_1].postalCode)
             }
 
             console.log('zip codes')
             console.log(zip_codes)
 
+            // Define Array for Unique Zip Codes
             var unique_codes = []
 
+            // Loop Through Zip Codes in Zip Code Array
             for (var count_2 = 0; count_2 < zip_codes.length; count_2++){
+
+                // Set Condition for Zip Code Not Present in Unique Zip Code Array
                 if (unique_codes.includes(zip_codes[count_2]) === false){
+
+                    // Add Zip Code to Unique Zip Code Array
                     unique_codes.push(zip_codes[count_2])
                 }
             }
@@ -498,11 +534,16 @@
             console.log('unique codes')
             console.log(unique_codes)
 
+            // Define Array for Unique Zip Code Counts
             var unique_counts = []
 
+            // Loop Through Zip Codes in Unique Zip Code Array
             for (var count_3 = 0; count_3 < unique_codes.length; count_3++){
+
+                // Define Counter Variable
                 var code_counter = 0
 
+                // 
                 for (var count_4 = 0; count_4 < zip_codes.length; count_4++){
                     if (unique_codes[count_3] === zip_codes[count_4]){
                         code_counter = code_counter + 1
