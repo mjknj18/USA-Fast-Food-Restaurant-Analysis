@@ -16,7 +16,7 @@ app = flask.Flask(__name__, template_folder = 'C:/Users/mjknj/Desktop/UNCC/Proje
 app.config["DEBUG"] = True
 
 #Define Variable for Postgres Password
-pg_password = ''
+pg_password = 'postgres:postgres'
 
 #Define PostgreSQL Database Engine
 engine = create_engine('postgresql://' + pg_password + '@localhost:5432/fast_food_db')

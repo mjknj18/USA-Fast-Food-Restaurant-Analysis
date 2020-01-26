@@ -11,30 +11,30 @@
   <script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet.js"></script>
 
   <style>
-      body {
-        padding: 0;
-        margin: 0;
-        }
+    /* Define Body Styling */
+    body {padding: 0; margin: 0}
 
-        /* set map, body, and html to 100% of the screen size */
-        #map,
-        body,
-        html {
-        height: 100%;
-        }
+    /* Define Map Styling */
+    #map, body, html {height: 100%}
 
-        h1 {
-        text-align: center;
-        }
+    /* Define Header Styling */
+    h1 {text-align: center}
   </style>
 </head>
 
 <!-- Define Page Body -->
 <body>
+
+    <!-- Define Map Container -->
     <div id = "map"></div>
 
+    <!-- Define Script for Input Data Processing -->
     <script>
+
+        // Define Variable for Input Data
         var data = {{data | safe}}
+
+        // Define Variable for State Abbreviation
         var state = data.name
 
         // Define Satellite Map Layer
@@ -42,28 +42,28 @@
             attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
             maxZoom: 18,
             id: "mapbox.satellite",
-            accessToken: ""});
+            accessToken: "pk.eyJ1IjoibWprbmoxOCIsImEiOiJjazVlaDlqNm4wNHoxM2ZwYnhxY3A5dXhnIn0.KAhQiVsQFvYLRjLUkKC1OQ"});
 
         // Define Outdoors Map Layer
         var outdoorsmap = L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
             attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
             maxZoom: 18,
             id: "mapbox.outdoors",
-            accessToken: ""});
+            accessToken: "pk.eyJ1IjoibWprbmoxOCIsImEiOiJjazVlaDlqNm4wNHoxM2ZwYnhxY3A5dXhnIn0.KAhQiVsQFvYLRjLUkKC1OQ"});
 
         // Define Dark Map Layer
         var darkmap = L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
             attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
             maxZoom: 18,
             id: "mapbox.dark",
-            accessToken: ""});
+            accessToken: "pk.eyJ1IjoibWprbmoxOCIsImEiOiJjazVlaDlqNm4wNHoxM2ZwYnhxY3A5dXhnIn0.KAhQiVsQFvYLRjLUkKC1OQ"});
 
         // Define Light Map Layer
         var lightmap = L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
             attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
             maxZoom: 18,
             id: "mapbox.light",
-            accessToken: ""});
+            accessToken: "pk.eyJ1IjoibWprbmoxOCIsImEiOiJjazVlaDlqNm4wNHoxM2ZwYnhxY3A5dXhnIn0.KAhQiVsQFvYLRjLUkKC1OQ"});
 
         // Define Array of Available Maps
         var baseMaps = {
@@ -72,214 +72,420 @@
             "Dark Map": darkmap,
             "Light Map" : lightmap};
 
+        // Define Variables for Map Center Coordinates & Zoom Level
         var center_coords = []
         var zoom_level = []
 
+        // Set Condition for Alabama Map
         if (state === "AL"){
+
+            // Set Map Center Coordinates & Zoom Level
             center_coords = [32.50, -86.38];
             zoom_level = [7]
         }
+
+        // Set Condition for Alaska Map
         else if (state === "AK"){
+
+            // Set Map Center Coordinates & Zoom Level
             center_coords = [64.06, -152.27];
             zoom_level = [4]
         }
+
+        // Set Condition for Arizona Map
         else if (state === "AZ"){
+
+            // Set Map Center Coordinates & Zoom Level
             center_coords = [34.27, -111.66];
             zoom_level = [7]
         }
+
+        // Set Condition for Arkansas Map
         else if (state === "AR"){
+
+            // Set Map Center Coordinates & Zoom Level
             center_coords = [34.89, -92.44];
             zoom_level = [7]
         }
+
+        // Set Condition for California Map
         else if (state === "CA"){
+
+            // Set Map Center Coordinates & Zoom Level
             center_coords = [37.18, -119.46];
             zoom_level = [6]
         }
+
+        // Set Condition for Colorado Map
         else if (state === "CO"){
+
+            // Set Map Center Coordinates & Zoom Level
             center_coords = [38.99, -105.54];
             zoom_level = [7]
         }
+
+        // Set Condition for Connecticut Map
         else if (state === "CT"){
+
+            // Set Map Center Coordinates & Zoom Level
             center_coords = [41.62, -72.72];
             zoom_level = [9]
         }
-        else if (state === "DE"){
-            center_coords = [38.98, -75.50];
-            zoom_level = [8]
-        }
+
+        // Set Condition for Washington DC Map
         else if (state === "DC"){
+
+            // Set Map Center Coordinates & Zoom Level
             center_coords = [38.91, -77.01];
             zoom_level = [10]
         }
+
+        // Set Condition for Delaware Map
+        else if (state === "DE"){
+
+            // Set Map Center Coordinates & Zoom Level
+            center_coords = [38.98, -75.50];
+            zoom_level = [8]
+        }
+
+        // Set Condition for Florida Map
         else if (state === "FL"){
-            center_coords = [28.63,-82.44];
+
+            // Set Map Center Coordinates & Zoom Level
+            center_coords = [28.63, -82.44];
             zoom_level = [6]
         }
+
+        // Set Condition for Georgia Map
         else if (state === "GA"){
+
+            // Set Map Center Coordinates & Zoom Level
             center_coords = [32.64, -83.44];
             zoom_level = [7]
         }
+
+        // Set Condition for Hawaii Map
         else if (state === "HI"){
-            center_coords = [20.29,-156.37];
+
+            // Set Map Center Coordinates & Zoom Level
+            center_coords = [20.29, -156.37];
             zoom_level = [7]
         }
+
+        // Set Condition for Idaho Map
         else if (state === "ID"){
-            center_coords = [44.35,-114.61];
+
+            // Set Map Center Coordinates & Zoom Level
+            center_coords = [44.35, -114.61];
             zoom_level = [6]
         }
+
+        // Set Condition for Illinois Map
         else if (state === "IL"){
+
+            // Set Map Center Coordinates & Zoom Level
             center_coords = [40.04, -89.19];
             zoom_level = [7]
         }
+
+        // Set Condition for Indiana Map
         else if (state === "IN"){
-            center_coords = [39.89,-86.28];
+
+            // Set Map Center Coordinates & Zoom Level
+            center_coords = [39.89, -86.28];
             zoom_level = [7]
         }
+
+        // Set Condition for Iowa Map
         else if (state === "IA"){
-            center_coords = [42.07,-93.49];
+
+            // Set Map Center Coordinates & Zoom Level
+            center_coords = [42.07, -93.49];
             zoom_level = [7]
         }
+
+        // Set Condition for Kansas Map
         else if (state === "KS"){
-            center_coords = [38.49,-98.38];
+
+            // Set Map Center Coordinates & Zoom Level
+            center_coords = [38.49, -98.38];
             zoom_level = [7]
         }
+
+        // Set Condition for Kentucky Map
         else if (state === "KY"){
-            center_coords = [37.53,-85.30];
+
+            // Set Map Center Coordinates & Zoom Level
+            center_coords = [37.53, -85.30];
             zoom_level = [7]
         }
+
+        // Set Condition for Louisiana Map
         else if (state === "LA"){
-            center_coords = [31.06,-91.99];
+
+            // Set Map Center Coordinates & Zoom Level
+            center_coords = [31.06, -91.99];
             zoom_level = [7]
         }
+
+        // Set Condition for Maine Map
         else if (state === "ME"){
-            center_coords = [45.36,-69.24];
+
+            // Set Map Center Coordinates & Zoom Level
+            center_coords = [45.36, -69.24];
             zoom_level = [7]
         }
+
+        // Set Condition for Maryland Map
         else if (state === "MD"){
-            center_coords = [39.05,-76.79];
+
+            // Set Map Center Coordinates & Zoom Level
+            center_coords = [39.05, -76.79];
             zoom_level = [8]
         }
+
+        // Set Condition for Massachusetts Map
         else if (state === "MA"){
-            center_coords = [42.25,-71.80];
+
+            // Set Map Center Coordinates & Zoom Level
+            center_coords = [42.25, -71.80];
             zoom_level = [8]
         }
+
+        // Set Condition for Michigan Map
         else if (state === "MI"){
-            center_coords = [44.34,-85.41];
+
+            // Set Map Center Coordinates & Zoom Level
+            center_coords = [44.34, -85.41];
             zoom_level = [7]
         }
+
+        // Set Condition for Minnesota Map
         else if (state === "MN"){
-            center_coords = [46.28,-94.30];
+
+            // Set Map Center Coordinates & Zoom Level
+            center_coords = [46.28, -94.30];
             zoom_level = [6]
         }
+
+        // Set Condition for Mississippi
         else if (state === "MS"){
-            center_coords = [32.73,-89.66];
+
+            // Set Map Center Coordinates & Zoom Level
+            center_coords = [32.73, -89.66];
             zoom_level = [7]
         }
+
+        // Set Condition for Missouri Map
         else if (state === "MO"){
-            center_coords = [38.35,-92.45];
+
+            // Set Map Center Coordinates & Zoom Level
+            center_coords = [38.35, -92.45];
             zoom_level = [7]
         }
+
+        // Set Condition for Montana Map
         else if (state === "MT"){
-            center_coords = [47.05,-109.63];
+
+            // Set Map Center Coordinates & Zoom Level
+            center_coords = [47.05, -109.63];
             zoom_level = [6]
         }
+
+        // Set Condition for Nebraska Map
         else if (state === "NE"){
-            center_coords = [41.53,-99.79];
+
+            // Set Map Center Coordinates & Zoom Level
+            center_coords = [41.53, -99.79];
             zoom_level = [7]
         }
+
+        // Set Condition for Nevada Map
         else if (state === "NV"){
-            center_coords = [39.32,-116.63];
+
+            // Set Map Center Coordinates & Zoom Level
+            center_coords = [39.32, -116.63];
             zoom_level = [6]
         }
+
+        // Set Condition for New Hampshire Map
         else if (state === "NH"){
-            center_coords = [43.68,-71.58];
+
+            // Set Map Center Coordinates & Zoom Level
+            center_coords = [43.68, -71.58];
             zoom_level = [8]
         }
+
+        // Set Condition for New Jersey Map
         else if (state === "NJ"){
+
+            // Set Map Center Coordinates & Zoom Level
             center_coords = [40.19, -74.67];
             zoom_level = [8]
         }
+
+        // Set Condition for New Mexico Map
         else if (state === "NM"){
-            center_coords = [34.40,-106.11];
+
+            // Set Map Center Coordinates & Zoom Level
+            center_coords = [34.40, -106.11];
             zoom_level = [6]
         }
+
+        // Set Condition for New York Map
         else if (state === "NY"){
-            center_coords = [42.95,-75.52];
+
+            // Set Map Center Coordinates & Zoom Level
+            center_coords = [42.95, -75.52];
             zoom_level = [7]
         }
+
+        // Set Condition for North Carolina Map
         else if (state === "NC"){
-            center_coords = [35.55,-79.38];
+
+            // Set Map Center Coordinates & Zoom Level
+            center_coords = [35.55, -79.38];
             zoom_level = [7]
         }
+
+        // Set Condition for North Dakota Map
         else if (state === "ND"){
-            center_coords = [47.45,-100.46];
+
+            // Set Map Center Coordinates & Zoom Level
+            center_coords = [47.45, -100.46];
             zoom_level = [7]
         }
+
+        // Set Condition for Ohio Map
         else if (state === "OH"){
-            center_coords = [40.28,-82.79];
+
+            // Set Map Center Coordinates & Zoom Level
+            center_coords = [40.28, -82.79];
             zoom_level = [7]
         }
+
+        // Set Condition for Oklahoma Map
         else if (state === "OK"){
-            center_coords = [35.58,-97.49];
+
+            // Set Map Center Coordinates & Zoom Level
+            center_coords = [35.58, -97.49];
             zoom_level = [7]
         }
+
+        // Set Condition for Oregon Map
         else if (state === "OR"){
-            center_coords = [43.93,-120.55];
+
+            // Set Map Center Coordinates & Zoom Level
+            center_coords = [43.93, -120.55];
             zoom_level = [7]
         }
+
+        // Set Condition for Pennsylvania Map
         else if (state === "PA"){
-            center_coords = [40.87,-77.79];
+
+            // Set Map Center Coordinates & Zoom Level
+            center_coords = [40.87, -77.79];
             zoom_level = [7]
         }
+
+        // Set Condition for Rhode Island Map
         else if (state === "RI"){
-            center_coords = [41.67,-71.55];
+
+            // Set Map Center Coordinates & Zoom Level
+            center_coords = [41.67, -71.55];
             zoom_level = [10]
         }
+
+        // Set Condition for South Carolina Map
         else if (state === "SC"){
-            center_coords = [33.91,-80.89];
+
+            // Set Map Center Coordinates & Zoom Level
+            center_coords = [33.91, -80.89];
             zoom_level = [7]
         }
+
+        // Set Condition for South Dakota Map
         else if (state === "SD"){
-            center_coords = [44.44,-100.22];
+
+            // Set Map Center Coordinates & Zoom Level
+            center_coords = [44.44, -100.22];
             zoom_level = [7]
         }
+
+        // Set Condition for Tennessee Map
         else if (state === "TN"){
-            center_coords = [35.85,-86.35];
+
+            // Set Map Center Coordinates & Zoom Level
+            center_coords = [35.85, -86.35];
             zoom_level = [7]
         }
+
+        // Set Condition for Texas Map
         else if (state === "TX"){
+
+            // Set Map Center Coordinates & Zoom Level
             center_coords = [31.47, -99.33];
             zoom_level = [6]
         }
+
+        // Set Condition for Utah Map
         else if (state === "UT"){
-            center_coords = [39.30,-111.67];
+
+            // Set Map Center Coordinates & Zoom Level
+            center_coords = [39.30, -111.67];
             zoom_level = [7]
         }
+
+        // Set Condition for Vermont Map
         else if (state === "VT"){
-            center_coords = [44.06,-72.66];
+
+            // Set Map Center Coordinates & Zoom Level
+            center_coords = [44.06, -72.66];
             zoom_level = [8]
         }
+
+        // Set Condition for Virginia Map
         else if (state === "VA"){
-            center_coords = [37.52,-78.85];
+
+            // Set Map Center Coordinates & Zoom Level
+            center_coords = [37.52, -78.85];
             zoom_level = [7]
         }
+
+        // Set Condition for Washington Map
         else if (state === "WA"){
-            center_coords = [47.38,-120.44];
+
+            // Set Map Center Coordinates & Zoom Level
+            center_coords = [47.38, -120.44];
             zoom_level = [7]
         }
+
+        // Set Condition for West Virginia Map
         else if (state === "WV"){
-            center_coords = [38.64,-80.62];
+
+            // Set Map Center Coordinates & Zoom Level
+            center_coords = [38.64, -80.62];
             zoom_level = [7]
         }
+
+        // Set Condition for Wisconsin Map
         else if (state === "WI"){
-            center_coords = [44.62,-89.99];
+
+            // Set Map Center Coordinates & Zoom Level
+            center_coords = [44.62, -89.99];
             zoom_level = [7]
         }
+
+        // Set Condition for Wyoming Map
         else if (state === "WY"){
-            center_coords = [42.99,-107.55];
+
+            // Set Map Center Coordinates & Zoom Level
+            center_coords = [42.99, -107.55];
             zoom_level = [7]
         }
         else {
+
+            // Set Map Center Coordinates & Zoom Level
             center_coords = [37.09, -95.71]
             zoom_level = [3]
         }

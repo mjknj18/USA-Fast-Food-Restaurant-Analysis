@@ -138,9 +138,8 @@
         </div>
     </footer>
 
-    <!-- Define Script Links for Charts JS & Leaflet JS Libraries -->
+    <!-- Define Script Link for Charts JS Library -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-    <script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet.js"></script>
 
     <!-- Define Script for Input Data Processing -->
     <script>
@@ -315,14 +314,16 @@
             // Create Dictionary of Zip Code Bar Chart Data & Labels
             var chart_data = {
                 labels: chart_zips,
-                datasets: [{data: chart_counts}]}
+                datasets: [{data: chart_counts,
+                            backgroundColor: ['#ff0000', '#ff1493', '#ff4500', '#ffff00', '#80080', '#008000', '#0000ff', '#a52a2a', '#808080', '#000000']}]}
 
+            console.log(Math.min(chart_counts))
             // Define Variable for Zip Code Bar Chart Object
             var Chart_1 = new Chart(ctx_bar, {
                 type: 'bar',
                 data: chart_data,
                 options: options = {
-                    scales: {xAxes: [{gridLines: {offsetGridLines: true}}], yAxes: [{min: 0}]},
+                    scales: {xAxes: [{gridLines: {offsetGridLines: true}}], yAxes: [{ticks: {beginAtZero: true}}]},
                     legend: {display: false}}});
 
             // Define Array for Restaurant Names
@@ -493,9 +494,8 @@
                 type: 'bar',
                 data: chart_data,
                 options: options = {
-                    scales: {xAxes: [{gridLines: {offsetGridLines: true}}]},
-                    legend: {display: false},
-                    scales: {yAxes: [{min: 0}]}}});
+                    scales: {xAxes: [{gridLines: {offsetGridLines: true}}], yAxes: [{ticks: {beginAtZero: true}}]},
+                    legend: {display: false}}});
 
             // Return Bar Chart Objects
             return [Chart_1, Chart_2]
@@ -612,7 +612,7 @@
 
             var chart_data = {
                 labels: chart_zips,
-                datasets: [{data: chart_counts}]}
+                datasets: [{data: chart_counts, backgroundColor: ['#ff0000', '#ff1493', '#ff4500', '#ffff00', '#80080', '#008000', '#0000ff', '#a52a2a', '#808080', '#000000']}]}
 
             var Chart_1 = new Chart(ctx_pie, {
                 type: 'doughnut',

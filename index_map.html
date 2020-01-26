@@ -11,7 +11,6 @@
   <script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet.js"></script>
 
   <style>
-
     /* Define Body Styling */
     body {padding: 0; margin: 0}
 
@@ -40,28 +39,28 @@
             attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
             maxZoom: 18,
             id: "mapbox.satellite",
-            accessToken: ""});
+            accessToken: "pk.eyJ1IjoibWprbmoxOCIsImEiOiJjazVlaDlqNm4wNHoxM2ZwYnhxY3A5dXhnIn0.KAhQiVsQFvYLRjLUkKC1OQ"});
 
         // Define Outdoors Map Layer
         var outdoorsmap = L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
             attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
             maxZoom: 18,
             id: "mapbox.outdoors",
-            accessToken: ""});
+            accessToken: "pk.eyJ1IjoibWprbmoxOCIsImEiOiJjazVlaDlqNm4wNHoxM2ZwYnhxY3A5dXhnIn0.KAhQiVsQFvYLRjLUkKC1OQ"});
 
         // Define Dark Map Layer
         var darkmap = L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
             attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
             maxZoom: 18,
             id: "mapbox.dark",
-            accessToken: ""});
+            accessToken: "pk.eyJ1IjoibWprbmoxOCIsImEiOiJjazVlaDlqNm4wNHoxM2ZwYnhxY3A5dXhnIn0.KAhQiVsQFvYLRjLUkKC1OQ"});
 
         // Define Light Map Layer
         var lightmap = L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
             attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
             maxZoom: 18,
             id: "mapbox.light",
-            accessToken: ""});
+            accessToken: "pk.eyJ1IjoibWprbmoxOCIsImEiOiJjazVlaDlqNm4wNHoxM2ZwYnhxY3A5dXhnIn0.KAhQiVsQFvYLRjLUkKC1OQ"});
 
         // Define Array of Available Maps
         var baseMaps = {
@@ -258,19 +257,23 @@
             zoom_level = [7]
         }
 
-        // Set Condition for Minnessota Map
+        // Set Condition for Minnesota Map
         else if (data[0].province === "MN" && data[data.length - 1].province === "MN"){
 
             // Set Map Center Coordinates & Zoom Level
             center_coords = [46.28, -94.30];
             zoom_level = [6]
         }
+
+        // Set Condition for Mississippi Map
         else if (data[0].province === "MS" && data[data.length - 1].province === "MS"){
 
             // Set Map Center Coordinates & Zoom Level
             center_coords = [32.73, -89.66];
             zoom_level = [7]
         }
+
+        // Set Data for Missouri Map
         else if (data[0].province === "MO" && data[data.length - 1].province === "MO"){
 
             // Set Map Center Coordinates & Zoom Level
@@ -283,144 +286,192 @@
             center_coords = [47.05, -109.63];
             zoom_level = [6]
         }
+
+        // Set Condition for Nebraska Map
         else if (data[0].province === "NE" && data[data.length - 1].province === "NE"){
 
             // Set Map Center Coordinates & Zoom Level
             center_coords = [41.53, -99.79];
             zoom_level = [7]
         }
+
+        // Set Condition for Nevada Map
         else if (data[0].province === "NV" && data[data.length - 1].province === "NV"){
 
             // Set Map Center Coordinates & Zoom Level
             center_coords = [39.32, -116.63];
             zoom_level = [6]
         }
+
+        // Set Condition for New Hampshire Map
         else if (data[0].province === "NH" && data[data.length - 1].province === "NH"){
 
             // Set Map Center Coordinates & Zoom Level
             center_coords = [43.68, -71.58];
             zoom_level = [8]
         }
+
+        // Set Condition for New Jersey Map
         else if (data[0].province === "NJ" && data[data.length - 1].province === "NJ"){
 
             // Set Map Center Coordinates & Zoom Level
             center_coords = [40.19, -74.67];
             zoom_level = [8]
         }
+
+        // Set Condition New Mexico Map
         else if (data[0].province === "NM" && data[data.length - 1].province === "NM"){
 
             // Set Map Center Coordinates & Zoom Level
             center_coords = [34.40, -106.11];
             zoom_level = [6]
         }
+
+        // Set Condition New York Map
         else if (data[0].province === "NY" && data[data.length - 1].province === "NY"){
 
             // Set Map Center Coordinates & Zoom Level
             center_coords = [42.95, -75.52];
             zoom_level = [7]
         }
+
+        // Set Condition for North Carolina Map
         else if (data[0].province === "NC" && data[data.length - 1].province === "NC"){
 
             // Set Map Center Coordinates & Zoom Level
             center_coords = [35.55, -79.38];
             zoom_level = [7]
         }
+
+        // Set Condition for North Dakota Map
         else if (data[0].province === "ND" && data[data.length - 1].province === "ND"){
 
             // Set Map Center Coordinates & Zoom Level
             center_coords = [47.45, -100.46];
             zoom_level = [7]
         }
+
+        // Set Condition for Ohio Map
         else if (data[0].province === "OH" && data[data.length - 1].province === "OH"){
 
             // Set Map Center Coordinates & Zoom Level
             center_coords = [40.28, -82.79];
             zoom_level = [7]
         }
+
+        // Set Condition for Oklahoma Map
         else if (data[0].province === "OK" && data[data.length - 1].province === "OK"){
 
             // Set Map Center Coordinates & Zoom Level
             center_coords = [35.58,-97.49];
             zoom_level = [7]
         }
+
+        // Set Condition for Oregon Map
         else if (data[0].province === "OR" && data[data.length - 1].province === "OR"){
 
             // Set Map Center Coordinates & Zoom Level
             center_coords = [43.93, -120.55];
             zoom_level = [7]
         }
+
+        // Set Condition for Pennsylvania Map
         else if (data[0].province === "PA" && data[data.length - 1].province === "PA"){
 
             // Set Map Center Coordinates & Zoom Level
             center_coords = [40.87, -77.79];
             zoom_level = [7]
         }
+
+        // Set Condition for Rhode Island Map
         else if (data[0].province === "RI" && data[data.length - 1].province === "RI"){
 
             // Set Map Center Coordinates & Zoom Level
             center_coords = [41.67, -71.55];
             zoom_level = [10]
         }
+
+        // Set Condition for South Carolina Map
         else if (data[0].province === "SC" && data[data.length - 1].province === "SC"){
 
             // Set Map Center Coordinates & Zoom Level
             center_coords = [33.91, -80.89];
             zoom_level = [7]
         }
+
+        // Set Condition for South Dakota Map
         else if (data[0].province === "SD" && data[data.length - 1].province === "SD"){
 
             // Set Map Center Coordinates & Zoom Level
             center_coords = [44.44, -100.22];
             zoom_level = [7]
         }
+
+        // Set Condition for Tennessee Map
         else if (data[0].province === "TN" && data[data.length - 1].province === "TN"){
 
             // Set Map Center Coordinates & Zoom Level
             center_coords = [35.85, -86.35];
             zoom_level = [7]
         }
+
+        // Set Condition for Texas Map
         else if (data[0].province === "TX" && data[data.length - 1].province === "TX"){
 
             // Set Map Center Coordinates & Zoom Level
             center_coords = [31.47, -99.33];
             zoom_level = [6]
         }
+
+        // Set Condition for Utah Map
         else if (data[0].province === "UT" && data[data.length - 1].province === "UT"){
 
             // Set Map Center Coordinates & Zoom Level
             center_coords = [39.30, -111.67];
             zoom_level = [7]
         }
+
+        // Set Condition for Vermont Map
         else if (data[0].province === "VT" && data[data.length - 1].province === "VT"){
 
             // Set Map Center Coordinates & Zoom Level
             center_coords = [44.06, -72.66];
             zoom_level = [8]
         }
+
+        // Set Condition for Virginia Map
         else if (data[0].province === "VA" && data[data.length - 1].province === "VA"){
 
             // Set Map Center Coordinates & Zoom Level
             center_coords = [37.52, -78.85];
             zoom_level = [7]
         }
+
+        // Set Condition for Washington Map
         else if (data[0].province === "WA" && data[data.length - 1].province === "WA"){
 
             // Set Map Center Coordinates & Zoom Level
             center_coords = [47.38, -120.44];
             zoom_level = [7]
         }
+
+        // Set Condition for West Virginia Map
         else if (data[0].province === "WV" && data[data.length - 1].province === "WV"){
 
             // Set Map Center Coordinates & Zoom Level
             center_coords = [38.64, -80.62];
             zoom_level = [7]
         }
+
+        // Set Condition for Wisconsin Map
         else if (data[0].province === "WI" && data[data.length - 1].province === "WI"){
 
             // Set Map Center Coordinates & Zoom Level
             center_coords = [44.62, -89.99];
             zoom_level = [7]
         }
+
+        // Set Condition for Wyoming Map
         else if (data[0].province === "WY" && data[data.length - 1].province === "WY"){
 
             // Set Map Center Coordinates & Zoom Level
@@ -443,16 +494,19 @@
         // Add Map Layers & Data Layer to Map Object
         L.control.layers(baseMaps).addTo(myMap);
 
+        // Loop Through Items in Imported Data
         for (var count_1 = 0; count_1 < data.length; count_1++) {
+
+            // Define Marker for Each Restaurant & Set Coordinates
             var marker = L.marker([data[count_1].latitude, data[count_1].longitude], {
                 draggable: true,
                 title: data[count_1].name})
             
+            // Attach Popup to Marker & Define Content
             marker.bindPopup("<h1>" + data[count_1].name + "</h1> <hr> <h3>Address: " + data[count_1].address + "</h3> <hr> <h3>City: " + data[count_1].city + "</h3> <hr> <h3>State: " + data[count_1].province + "</h3> <hr> <h3>Zip: " + data[count_1].postalCode)
 
-            marker.addTo(myMap)
-        }
-
+            // Add Marker to Map Object
+            marker.addTo(myMap)}
     </script>
 </body>
 
