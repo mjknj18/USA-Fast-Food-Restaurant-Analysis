@@ -76,7 +76,7 @@
 
                                 <!-- Define Options for Dropdown Menu -->
                                 <option>Bar Chart</option>
-                                <option>Pie Chart</option>
+                                <option>Doughnut Chart</option>
                             </select>
                         </div>
                     </div>
@@ -92,7 +92,7 @@
                         <h2 class = "card-title text-center">Instructions<hr></h2>
 
                         <!-- Define Dashboard Instructions -->
-                        <h3 class = "text-center">TBD</h3>
+                        <h3 class = "text-center">Use dropdown menu to select chart type. Hover over charts to display additional information.</h3>
                     </div>
                 </div>
             </div>
@@ -150,8 +150,14 @@
         console.log('data')
         console.log(data)
 
+        // Define Array of Color IDs
+        var colors = ['#800000', '#800080', '#000080', '#ff0000', '#ff00ff', '#000000', '#ffa500', '#00ff00',
+                      '#808080', '#ffff00', '#008080', '#c0c0c0', '#808000', '#00ffff', '#008000', '#0000ff',
+                      '#800000', '#800080', '#000080', '#ff0000', '#ff00ff', '#000000', '#ffa500', '#00ff00',
+                      '#808080', '#ffff00', '#008080', '#c0c0c0', '#808000', '#00ffff', '#008000', '#0000ff']
+
         // Define Function for Bar Chart Generation
-        function bar_chart(data){
+        function bar_chart(data, colors){
 
             // Define Array for Zip Codes
             var zip_codes = []
@@ -160,11 +166,7 @@
             for (var count_1 = 0; count_1 < data.length; count_1++){
 
                 // Extract Zip Code from Each Item & Add to Zip Code Aray
-                zip_codes.push(data[count_1].postalCode)
-            }
-
-            console.log('zip codes')
-            console.log(zip_codes)
+                zip_codes.push(data[count_1].postalCode)}
 
             // Define Array for Unique Zip Codes
             var unique_codes = []
@@ -176,12 +178,7 @@
                 if (unique_codes.includes(zip_codes[count_2]) === false){
 
                     // Add Zip Code to Unique Zip Code Array
-                    unique_codes.push(zip_codes[count_2])
-                }
-            }
-            
-            console.log('unique codes')
-            console.log(unique_codes)
+                    unique_codes.push(zip_codes[count_2])}}
 
             // Define Array for Unique Zip Code Counts
             var unique_counts = []
@@ -192,23 +189,17 @@
                 // Define Counter Variable
                 var code_counter = 0
 
-                // Loop Through Zip Codes in Zip Codes Array
+                // Loop Through Zip Codes in Zip Code Array
                 for (var count_4 = 0; count_4 < zip_codes.length; count_4++){
 
                     // Set Condition for Occurrence of Unique Zip Code in Zip Code Array 
                     if (unique_codes[count_3] === zip_codes[count_4]){
 
                         // Increment Counter Variable
-                        code_counter = code_counter + 1
-                    }
-                }
+                        code_counter = code_counter + 1}}
 
                 // Add Counter Variable to Unique Zip Code Counts Array
-                unique_counts.push(code_counter)
-            }
-
-            console.log('unique counts')
-            console.log(unique_counts)
+                unique_counts.push(code_counter)}
 
             // Define Arrays for Chart Zip Codes & Chart Zip Code Counts
             var chart_zips = []
@@ -249,9 +240,7 @@
                             previous_max = current_max
 
                             // Find New Maximum Zip Code Count
-                            current_max = unique_counts.reduce(function(a, b) {return Math.max(a, b)})
-                        }
-                    }
+                            current_max = unique_counts.reduce(function(a, b) {return Math.max(a, b)})}}
                     else {
 
                         // Keep Looping Until Chart Zip Codes Array has 10 Values
@@ -273,11 +262,7 @@
                             previous_max = current_max
 
                             // Find New Maximum Zip Code Count
-                            current_max = unique_counts.reduce(function(a, b) {return Math.max(a, b)})
-                        }
-                    }
-                }
-            }
+                            current_max = unique_counts.reduce(function(a, b) {return Math.max(a, b)})}}}}
             else {
 
                 // Loop Through Counts in Unique Zip Code Counts Array
@@ -299,14 +284,16 @@
                     previous_max = current_max
 
                     // Find New Maximum Zip Code Count
-                    current_max = unique_counts.reduce(function(a, b) {return Math.max(a, b)})
-                }
-            }
+                    current_max = unique_counts.reduce(function(a, b) {return Math.max(a, b)})}}
 
-            console.log('chart zips')
-            console.log(chart_zips)
-            console.log('chart counts')
-            console.log(chart_counts)
+            // Define Array for Chart Colors
+            var chart_colors = []
+
+            // Loop Through Counts in Chart Zip Code Counts Array
+            for (var count_7 = 0; count_7 < chart_counts.length; count_7++){
+
+                // Add Color ID to Chart Colors Array
+                chart_colors.push(colors[count_7])}
 
             // Define Variable for HTML Chart Container
             var ctx_bar = document.getElementById('zip_chart').getContext('2d')
@@ -314,74 +301,62 @@
             // Create Dictionary of Zip Code Bar Chart Data & Labels
             var chart_data = {
                 labels: chart_zips,
-                datasets: [{data: chart_counts,
-                            backgroundColor: ['#ff0000', '#ff1493', '#ff4500', '#ffff00', '#80080', '#008000', '#0000ff', '#a52a2a', '#808080', '#000000']}]}
+                datasets: [{data: chart_counts, backgroundColor: chart_colors}]}
 
-            console.log(Math.min(chart_counts))
             // Define Variable for Zip Code Bar Chart Object
             var Chart_1 = new Chart(ctx_bar, {
                 type: 'bar',
                 data: chart_data,
                 options: options = {
-                    scales: {xAxes: [{gridLines: {offsetGridLines: true}}], yAxes: [{ticks: {beginAtZero: true}}]},
-                    legend: {display: false}}});
+                    scales: {xAxes: [{gridLines: {offsetGridLines: true}, 
+                                      scaleLabel: {display: true, labelString: 'Zip Code',
+                                      fontStyle: 'bold', fontSize: 20}}],
+                             yAxes: [{ticks: {beginAtZero: true}, scaleLabel: {display: true,
+                                      labelString: 'Zip Code Counts', fontStyle: 'bold', fontSize: 20}}]},
+                    legend: {display: false}}})
+
 
             // Define Array for Restaurant Names
             var restaurant_names = []
 
             // Loop Through Items in Imported Data
-            for (var count_7 = 0; count_7 < data.length; count_7++){
+            for (var count_8 = 0; count_8 < data.length; count_8++){
 
                 // Extract Restaurant Names from Each Item & Add to Restaurant Names Array
-                restaurant_names.push(data[count_7].name.toUpperCase())
-            }
-
-            console.log('restaurant names')
-            console.log(restaurant_names)
+                restaurant_names.push(data[count_8].name.toUpperCase())}
 
             // Define Array for Unique Restaurant Names
             var unique_restaurants = []
 
             // Loop Through Names in Restaurant Names Array
-            for (var count_8 = 0; count_8 < restaurant_names.length; count_8++){
+            for (var count_9 = 0; count_9 < restaurant_names.length; count_9++){
 
                 // Set Condition for Name Not Present in Unique Restaurant Names Array
-                if (unique_restaurants.includes(restaurant_names[count_8]) === false){
+                if (unique_restaurants.includes(restaurant_names[count_9]) === false){
 
                     // Add Name to Unique Names Array
-                    unique_restaurants.push(restaurant_names[count_8])
-                }
-            }
-
-            console.log('unique restaurants')
-            console.log(unique_restaurants)
+                    unique_restaurants.push(restaurant_names[count_9])}}
 
             // Define Array for Unique Restaurant Name Counts
             var restaurant_counts = []
 
             // Loop Through Names in Unique Restaurant Names Array
-            for (var count_9 = 0; count_9 < unique_restaurants.length; count_9++){
+            for (var count_10 = 0; count_10 < unique_restaurants.length; count_10++){
 
                 // Define Counter Variable
                 var type_counter = 0
 
                 // Loop Through Names in Restaurant Names Array
-                for (var count_10 = 0; count_10 < restaurant_names.length; count_10++){
+                for (var count_11 = 0; count_11 < restaurant_names.length; count_11++){
 
                     // Set Condition for Occurrence of Unique Restaurant Name in Restaurant Names Array
-                    if (unique_restaurants[count_9] === restaurant_names[count_10]){
+                    if (unique_restaurants[count_10] === restaurant_names[count_11]){
 
                         // Increment Counter Variable
-                        type_counter = type_counter + 1
-                    }
-                }
+                        type_counter = type_counter + 1}}
 
                 // Add Counter Variable to Unique Restaurant Name Counts Array
-                restaurant_counts.push(type_counter)
-            }
-
-            console.log('restaurant counts')
-            console.log(restaurant_counts)
+                restaurant_counts.push(type_counter)}
 
             // Define Arrays for Chart Restaurant Names & Chart Restaurant Name Counts
             var chart_type = []
@@ -398,7 +373,7 @@
             if (restaurant_counts.length >= 10){
 
                 // Loop Through Counts in Unique Restaurant Name Counts Array
-                for (var count_11 = 0; count_11 < restaurant_counts.length; count_11++){
+                for (var count_12 = 0; count_12 < restaurant_counts.length; count_12++){
 
                     // Set Condition for 10+ Chart Restaurant Names
                     if (chart_type.length >= 10){
@@ -422,9 +397,7 @@
                             previous_max = current_max
 
                             // Find New Maximum Restaurant Name Count
-                            current_max = restaurant_counts.reduce(function(a, b) {return Math.max(a, b)})
-                        }
-                    }
+                            current_max = restaurant_counts.reduce(function(a, b) {return Math.max(a, b)})}}
                     else {
 
                         // Keep Looping Until Chart Restaurant Name Array has 10 Values
@@ -446,15 +419,11 @@
                             previous_max = current_max
 
                             // Find New Maximum Restaurant Name Count
-                            current_max = restaurant_counts.reduce(function(a, b) {return Math.max(a, b)})
-                        }
-                    }
-                }
-            }
+                            current_max = restaurant_counts.reduce(function(a, b) {return Math.max(a, b)})}}}}
             else {
 
                 // Loop Through Counts in Unique Restaurant Name Counts Array
-                for (var count_12 = 0; count_12 < restaurant_counts.length; count_12++){
+                for (var count_13 = 0; count_13 < restaurant_counts.length; count_13++){
 
                     // Find Index of Current Maximum Restaurant Name Count
                     type_index = restaurant_counts.indexOf(current_max)
@@ -472,14 +441,16 @@
                     previous_max = current_max
 
                     // Find New Maximum Restaurant Name Count
-                    current_max = restaurant_counts.reduce(function(a, b) {return Math.max(a, b)})
-                }
-            }
+                    current_max = restaurant_counts.reduce(function(a, b) {return Math.max(a, b)})}}
 
-            console.log('chart type')
-            console.log(chart_type)
-            console.log('bar count')
-            console.log(chart_count)
+            // Define Array for Chart Colors
+            var chart_color = []
+
+            // Loop Through Counts in Chart Restaurant Name Counts Array
+            for (var count_14 = 0; count_14 < chart_count.length; count_14++){
+
+                // Add Color ID to Chart Colors Array
+                chart_color.push(colors[count_14])}
 
             // Define Variable for HTML Chart Container
             var ctx_bar = document.getElementById('chains_chart').getContext('2d')
@@ -487,22 +458,25 @@
             // Create Dictionary of Restaurant Name Bar Chart Data & Labels
             var chart_data = {
                 labels: chart_type,
-                datasets: [{data: chart_count}]}
+                datasets: [{data: chart_count, backgroundColor: chart_color}]}
 
             // Define Variable for Restaurant Name Bar Chart Object
             var Chart_2 = new Chart(ctx_bar, {
                 type: 'bar',
                 data: chart_data,
                 options: options = {
-                    scales: {xAxes: [{gridLines: {offsetGridLines: true}}], yAxes: [{ticks: {beginAtZero: true}}]},
+                    scales: {xAxes: [{gridLines: {offsetGridLines: true}, 
+                                      scaleLabel: {display: true, labelString: 'Restaurant Name',
+                                      fontStyle: 'bold', fontSize: 20}}],
+                             yAxes: [{ticks: {beginAtZero: true}, scaleLabel: {display: true,
+                                      labelString: 'Restaurant Name Counts', fontStyle: 'bold', fontSize: 20}}]},
                     legend: {display: false}}});
 
             // Return Bar Chart Objects
-            return [Chart_1, Chart_2]
-        }
+            return [Chart_1, Chart_2]}
 
-        // Define Function for Pie Chart Generation
-        function pie_chart(data){
+        // Define Function for Bar Chart Generation
+        function bar_chart(data, colors){
 
             // Define Array for Zip Codes
             var zip_codes = []
@@ -510,12 +484,8 @@
             // Loop Through Items in Imported Data
             for (var count_1 = 0; count_1 < data.length; count_1++){
 
-                // Extract Zip Code from Each Item & Add to Zip Code Array
-                zip_codes.push(data[count_1].postalCode)
-            }
-
-            console.log('zip codes')
-            console.log(zip_codes)
+                // Extract Zip Code from Each Item & Add to Zip Code Aray
+                zip_codes.push(data[count_1].postalCode)}
 
             // Define Array for Unique Zip Codes
             var unique_codes = []
@@ -527,12 +497,7 @@
                 if (unique_codes.includes(zip_codes[count_2]) === false){
 
                     // Add Zip Code to Unique Zip Code Array
-                    unique_codes.push(zip_codes[count_2])
-                }
-            }
-
-            console.log('unique codes')
-            console.log(unique_codes)
+                    unique_codes.push(zip_codes[count_2])}}
 
             // Define Array for Unique Zip Code Counts
             var unique_counts = []
@@ -543,208 +508,627 @@
                 // Define Counter Variable
                 var code_counter = 0
 
-                // 
+                // Loop Through Zip Codes in Zip Code Array
                 for (var count_4 = 0; count_4 < zip_codes.length; count_4++){
+
+                    // Set Condition for Occurrence of Unique Zip Code in Zip Code Array 
                     if (unique_codes[count_3] === zip_codes[count_4]){
-                        code_counter = code_counter + 1
-                    }
-                }
 
-                unique_counts.push(code_counter)
-            }
+                        // Increment Counter Variable
+                        code_counter = code_counter + 1}}
 
-            console.log('unique counts')
-            console.log(unique_counts)
+                // Add Counter Variable to Unique Zip Code Counts Array
+                unique_counts.push(code_counter)}
 
+            // Define Arrays for Chart Zip Codes & Chart Zip Code Counts
             var chart_zips = []
             var chart_counts = []
+
+            // Define Variables for Current & Previous Maximum Zip Code Count
             var current_max = unique_counts.reduce(function(a, b) {return Math.max(a, b)})
             var previous_max = 0
+
+            // Define Variable for Zip Code Index
             var zip_index = 0
 
+            // Define Condition for 10+ Unique Zip Codes
             if (unique_counts.length >= 10){
+
+                // Loop Through Counts in Unique Zip Code Counts Array
                 for (var count_5 = 0; count_5 < unique_counts.length; count_5++){
+
+                    // Set Condition for 10+ Chart Zip Codes
                     if (chart_zips.length >= 10){
+
+                        // Keep Looping Until Maximum Zip Code Count Changes
                         while (current_max == previous_max){
+
+                            // Find Index of Current Maximum Zip Code Count
                             zip_index = unique_counts.indexOf(current_max)
+
+                            // Add Unique Zip Code to Chart Zip Codes Array
                             chart_zips.push(unique_codes[zip_index])
+
+                            // Add Current Maximum Zip Code Count to Chart Zip Code Counts Array
                             chart_counts.push(current_max)
 
+                            // Replace Current Maximum Zip Code Count with Default Value
                             unique_counts.splice(zip_index, 1, -1)
 
+                            // Set Previous Maximum Zip Code Count Equal to Current Maximum Zip Code Count
                             previous_max = current_max
-                            current_max = unique_counts.reduce(function(a, b) {return Math.max(a, b)})
-                        }
-                    }
+
+                            // Find New Maximum Zip Code Count
+                            current_max = unique_counts.reduce(function(a, b) {return Math.max(a, b)})}}
                     else {
+
+                        // Keep Looping Until Chart Zip Codes Array has 10 Values
                         while (chart_zips.length < 10){
+
+                            // Find Index of Current Maximum Zip Code Count
                             zip_index = unique_counts.indexOf(current_max)
+
+                            // Add Unique Zip Code to Chart Zip Codes Array
                             chart_zips.push(unique_codes[zip_index])
+
+                            // Add Current Maximum Zip Code Count to Chart Zip Code Counts Array
                             chart_counts.push(current_max)
 
+                            // Replace Current Maximum Zip Code Count with Default Value
                             unique_counts.splice(zip_index, 1, -1)
 
+                            // Set Previous Maximum Zip Code Count Equal to Current Maximum Zip Code Count
                             previous_max = current_max
-                            current_max = unique_counts.reduce(function(a, b) {return Math.max(a, b)})
-                        }
-                    }
-                }
-            }
+
+                            // Find New Maximum Zip Code Count
+                            current_max = unique_counts.reduce(function(a, b) {return Math.max(a, b)})}}}}
             else {
+
+                // Loop Through Counts in Unique Zip Code Counts Array
                 for (var count_6 = 0; count_6 < unique_counts.length; count_6++){
+
+                    // Find Index of Current Maximum Zip Code Count
                     zip_index = unique_counts.indexOf(current_max)
+
+                    // Add Unique Zip Code to Chart Zip Codes Array
                     chart_zips.push(unique_codes[zip_index])
+
+                    // Add Current Maximum Zip Code Count to Chart Zip Code Counts Array
                     chart_counts.push(current_max)
 
+                    // Replace Current Maximum Zip Code Count with Default Value
                     unique_counts.splice(zip_index, 1, -1)
 
+                    // Set previous Maximum Zip Code Count Equal to Current Maximum Zip Code Count
                     previous_max = current_max
-                    current_max = unique_counts.reduce(function(a, b) {return Math.max(a, b)})
-                }
-            }
 
-            console.log('chart zips')
-            console.log(chart_zips)
-            console.log('chart counts')
-            console.log(chart_counts)
+                    // Find New Maximum Zip Code Count
+                    current_max = unique_counts.reduce(function(a, b) {return Math.max(a, b)})}}
 
-            var ctx_pie = document.getElementById('zip_chart').getContext('2d')
+            // Define Array for Chart Colors
+            var chart_colors = []
 
+            // Loop Through Counts in Chart Zip Code Counts Array
+            for (var count_7 = 0; count_7 < chart_counts.length; count_7++){
+
+                // Add Color ID to Chart Colors Array
+                chart_colors.push(colors[count_7])}
+
+            // Define Variable for HTML Chart Container
+            var ctx_bar = document.getElementById('zip_chart').getContext('2d')
+
+            // Create Dictionary of Zip Code Bar Chart Data & Labels
             var chart_data = {
                 labels: chart_zips,
-                datasets: [{data: chart_counts, backgroundColor: ['#ff0000', '#ff1493', '#ff4500', '#ffff00', '#80080', '#008000', '#0000ff', '#a52a2a', '#808080', '#000000']}]}
+                datasets: [{data: chart_counts, backgroundColor: chart_colors}]}
 
-            var Chart_1 = new Chart(ctx_pie, {
-                type: 'doughnut',
+            // Define Variable for Zip Code Bar Chart Object
+            var Chart_1 = new Chart(ctx_bar, {
+                type: 'bar',
                 data: chart_data,
-                options: options = {legend: {display: false}}});
+                options: options = {
+                    scales: {xAxes: [{gridLines: {offsetGridLines: true}, 
+                                      scaleLabel: {display: true, labelString: 'Zip Code',
+                                      fontStyle: 'bold', fontSize: 20}}],
+                             yAxes: [{ticks: {beginAtZero: true}, scaleLabel: {display: true,
+                                      labelString: 'Zip Code Counts', fontStyle: 'bold', fontSize: 20}}]},
+                    legend: {display: false}}})
 
+
+            // Define Array for Restaurant Names
             var restaurant_names = []
 
-            for (var count_7 = 0; count_7 < data.length; count_7++){
-                restaurant_names.push(data[count_7].name.toUpperCase())
-            }
+            // Loop Through Items in Imported Data
+            for (var count_8 = 0; count_8 < data.length; count_8++){
 
-            console.log('restaurant names')
-            console.log(restaurant_names)
+                // Extract Restaurant Names from Each Item & Add to Restaurant Names Array
+                restaurant_names.push(data[count_8].name.toUpperCase())}
 
+            // Define Array for Unique Restaurant Names
             var unique_restaurants = []
 
-            if (restaurant_names.length >= 10){
-                for (var count_8 = 0; count_8 < restaurant_names.length; count_8++){
-                    if (unique_restaurants.includes(restaurant_names[count_8]) === false){
-                        unique_restaurants.push(restaurant_names[count_8])
-                    }
-                }
-            }
-            else {
-                unique_restaurants = restaurant_names
-            }
+            // Loop Through Names in Restaurant Names Array
+            for (var count_9 = 0; count_9 < restaurant_names.length; count_9++){
 
-            console.log('unique restaurants')
-            console.log(unique_restaurants)
+                // Set Condition for Name Not Present in Unique Restaurant Names Array
+                if (unique_restaurants.includes(restaurant_names[count_9]) === false){
 
+                    // Add Name to Unique Names Array
+                    unique_restaurants.push(restaurant_names[count_9])}}
+
+            // Define Array for Unique Restaurant Name Counts
             var restaurant_counts = []
 
-            for (var count_9 = 0; count_9 < unique_restaurants.length; count_9++){
+            // Loop Through Names in Unique Restaurant Names Array
+            for (var count_10 = 0; count_10 < unique_restaurants.length; count_10++){
+
+                // Define Counter Variable
                 var type_counter = 0
 
-                for (var count_10 = 0; count_10 < restaurant_names.length; count_10++){
-                    if (unique_restaurants[count_9] === restaurant_names[count_10]){
-                        type_counter = type_counter + 1
-                    }
-                }
+                // Loop Through Names in Restaurant Names Array
+                for (var count_11 = 0; count_11 < restaurant_names.length; count_11++){
 
-                restaurant_counts.push(type_counter)
-            }
+                    // Set Condition for Occurrence of Unique Restaurant Name in Restaurant Names Array
+                    if (unique_restaurants[count_10] === restaurant_names[count_11]){
 
-            console.log('restaurant counts')
-            console.log(restaurant_counts)
+                        // Increment Counter Variable
+                        type_counter = type_counter + 1}}
 
+                // Add Counter Variable to Unique Restaurant Name Counts Array
+                restaurant_counts.push(type_counter)}
+
+            // Define Arrays for Chart Restaurant Names & Chart Restaurant Name Counts
             var chart_type = []
             var chart_count = []
+
+            // Define Variables for Current & Previous Maximum Restaurant Name Count
             var current_max = restaurant_counts.reduce(function(a, b) {return Math.max(a, b)})
             var previous_max = 0
+
+            // Define Variable for Restaurant Name Index
             var type_index = 0
 
+            // Set Condition for 10+ Unique Restaurant Names
             if (restaurant_counts.length >= 10){
-                for (var count_11 = 0; count_11 < restaurant_counts.length; count_11++){
-                    if (chart_type.length >= 10){
-                        while (current_max == previous_max){
-                            type_index = restaurant_counts.indexOf(current_max)
-                            chart_type.push(unique_restaurants[type_index])
-                            chart_count.push(current_max)
 
-                            restaurant_counts.splice(type_index, 1, -1)
-
-                            previous_max = current_max
-                            current_max = restaurant_counts.reduce(function(a, b) {return Math.max(a, b)})
-                        }
-                    }
-                    else {
-                        while (chart_type.length < 10){
-                            type_index = restaurant_counts.indexOf(current_max)
-                            chart_type.push(unique_restaurants[type_index])
-                            chart_count.push(current_max)
-
-                            restaurant_counts.splice(type_index, 1, -1)
-
-                            previous_max = current_max
-                            current_max = restaurant_counts.reduce(function(a, b) {return Math.max(a, b)})
-                        }
-                    }
-                }
-            }
-            else {
+                // Loop Through Counts in Unique Restaurant Name Counts Array
                 for (var count_12 = 0; count_12 < restaurant_counts.length; count_12++){
+
+                    // Set Condition for 10+ Chart Restaurant Names
+                    if (chart_type.length >= 10){
+
+                        // Keep Looping Until Maximum Restaurant Name Count Changes
+                        while (current_max == previous_max){
+
+                            // Find Index of Current Maximum Restaurant Name Count
+                            type_index = restaurant_counts.indexOf(current_max)
+
+                            // Add Unique Restaurant Name to Chart Restaurant Names Array
+                            chart_type.push(unique_restaurants[type_index])
+
+                            // Add Current Maximum Restaurant Name Count to Chart Restaurant Name Counts Array
+                            chart_count.push(current_max)
+
+                            // Replace Current Restaurant Name Count with Default Value
+                            restaurant_counts.splice(type_index, 1, -1)
+
+                            // Set Previous Maximum Restaurant Name Count Equal to Current Maximum Restaurant Name Count
+                            previous_max = current_max
+
+                            // Find New Maximum Restaurant Name Count
+                            current_max = restaurant_counts.reduce(function(a, b) {return Math.max(a, b)})}}
+                    else {
+
+                        // Keep Looping Until Chart Restaurant Name Array has 10 Values
+                        while (chart_type.length < 10){
+
+                            // Find Index of Current Maximum Restaurant Name Count
+                            type_index = restaurant_counts.indexOf(current_max)
+
+                            // Add Unique Restaurant Name to Chart Restaurant Names Array
+                            chart_type.push(unique_restaurants[type_index])
+
+                            // Add Current Maximum Restaurant Name Count to Chart Restaurant Name Counts Array
+                            chart_count.push(current_max)
+
+                            // Replace Current Restaurant Name Count with Default Value
+                            restaurant_counts.splice(type_index, 1, -1)
+
+                            // Set Previous Maximum Restaurant Name Count Equal to Current Maximum Restaurant Name Count
+                            previous_max = current_max
+
+                            // Find New Maximum Restaurant Name Count
+                            current_max = restaurant_counts.reduce(function(a, b) {return Math.max(a, b)})}}}}
+            else {
+
+                // Loop Through Counts in Unique Restaurant Name Counts Array
+                for (var count_13 = 0; count_13 < restaurant_counts.length; count_13++){
+
+                    // Find Index of Current Maximum Restaurant Name Count
                     type_index = restaurant_counts.indexOf(current_max)
+
+                    // Add Unique Restaurant Name to Chart Restaurant Names Array
                     chart_type.push(unique_restaurants[type_index])
+
+                    // Add Current Maximum Restaurant Name Count to Chart Restaurant Name Counts Array
                     chart_count.push(current_max)
 
+                    // Replace Current Restaurant Name Count with Default Value
                     restaurant_counts.splice(type_index, 1, -1)
 
+                    // Set Previous Maximum Restaurant Name Count Equal to Current Maximum Restaurant Name Count
                     previous_max = current_max
-                    current_max = restaurant_counts.reduce(function(a, b) {return Math.max(a, b)})
-                }
-            }
 
-            console.log('chart type')
-            console.log(chart_type)
-            console.log('chart count')
-            console.log(chart_count)
+                    // Find New Maximum Restaurant Name Count
+                    current_max = restaurant_counts.reduce(function(a, b) {return Math.max(a, b)})}}
 
-            var ctx_pie = document.getElementById('chains_chart').getContext('2d')
+            // Define Array for Chart Colors
+            var chart_color = []
 
+            // Loop Through Counts in Chart Restaurant Name Counts Array
+            for (var count_14 = 0; count_14 < chart_count.length; count_14++){
+
+                // Add Color ID to Chart Colors Array
+                chart_color.push(colors[count_14])}
+
+            // Define Variable for HTML Chart Container
+            var ctx_bar = document.getElementById('chains_chart').getContext('2d')
+
+            // Create Dictionary of Restaurant Name Bar Chart Data & Labels
             var chart_data = {
                 labels: chart_type,
-                datasets: [{data: chart_count}]}
+                datasets: [{data: chart_count, backgroundColor: chart_color}]}
 
-            var Chart_2 = new Chart(ctx_pie, {
+            // Define Variable for Restaurant Name Bar Chart Object
+            var Chart_2 = new Chart(ctx_bar, {
+                type: 'bar',
+                data: chart_data,
+                options: options = {
+                    scales: {xAxes: [{gridLines: {offsetGridLines: true}, 
+                                      scaleLabel: {display: true, labelString: 'Restaurant Name',
+                                      fontStyle: 'bold', fontSize: 20}}],
+                             yAxes: [{ticks: {beginAtZero: true}, scaleLabel: {display: true,
+                                      labelString: 'Restaurant Name Counts', fontStyle: 'bold', fontSize: 20}}]},
+                    legend: {display: false}}});
+
+            // Return Bar Chart Objects
+            return [Chart_1, Chart_2]}
+
+        // Define Function for Doughnut Chart Generation
+        function doughnut_chart(data, colors){
+
+            // Define Array for Zip Codes
+            var zip_codes = []
+
+            // Loop Through Items in Imported Data
+            for (var count_1 = 0; count_1 < data.length; count_1++){
+
+                // Extract Zip Code from Each Item & Add to Zip Code Aray
+                zip_codes.push(data[count_1].postalCode)}
+
+            // Define Array for Unique Zip Codes
+            var unique_codes = []
+
+            // Loop Through Zip Codes in Zip Code Array
+            for (var count_2 = 0; count_2 < zip_codes.length; count_2++){
+
+                // Set Condition for Zip Code Not Present in Unique Zip Code Array
+                if (unique_codes.includes(zip_codes[count_2]) === false){
+
+                    // Add Zip Code to Unique Zip Code Array
+                    unique_codes.push(zip_codes[count_2])}}
+
+            // Define Array for Unique Zip Code Counts
+            var unique_counts = []
+
+            // Loop Through Zip Codes in Unique Zip Code Array
+            for (var count_3 = 0; count_3 < unique_codes.length; count_3++){
+
+                // Define Counter Variable
+                var code_counter = 0
+
+                // Loop Through Zip Codes in Zip Code Array
+                for (var count_4 = 0; count_4 < zip_codes.length; count_4++){
+
+                    // Set Condition for Occurrence of Unique Zip Code in Zip Code Array 
+                    if (unique_codes[count_3] === zip_codes[count_4]){
+
+                        // Increment Counter Variable
+                        code_counter = code_counter + 1}}
+
+                // Add Counter Variable to Unique Zip Code Counts Array
+                unique_counts.push(code_counter)}
+
+            // Define Arrays for Chart Zip Codes & Chart Zip Code Counts
+            var chart_zips = []
+            var chart_counts = []
+
+            // Define Variables for Current & Previous Maximum Zip Code Count
+            var current_max = unique_counts.reduce(function(a, b) {return Math.max(a, b)})
+            var previous_max = 0
+
+            // Define Variable for Zip Code Index
+            var zip_index = 0
+
+            // Define Condition for 10+ Unique Zip Codes
+            if (unique_counts.length >= 10){
+
+                // Loop Through Counts in Unique Zip Code Counts Array
+                for (var count_5 = 0; count_5 < unique_counts.length; count_5++){
+
+                    // Set Condition for 10+ Chart Zip Codes
+                    if (chart_zips.length >= 10){
+
+                        // Keep Looping Until Maximum Zip Code Count Changes
+                        while (current_max == previous_max){
+
+                            // Find Index of Current Maximum Zip Code Count
+                            zip_index = unique_counts.indexOf(current_max)
+
+                            // Add Unique Zip Code to Chart Zip Codes Array
+                            chart_zips.push(unique_codes[zip_index])
+
+                            // Add Current Maximum Zip Code Count to Chart Zip Code Counts Array
+                            chart_counts.push(current_max)
+
+                            // Replace Current Maximum Zip Code Count with Default Value
+                            unique_counts.splice(zip_index, 1, -1)
+
+                            // Set Previous Maximum Zip Code Count Equal to Current Maximum Zip Code Count
+                            previous_max = current_max
+
+                            // Find New Maximum Zip Code Count
+                            current_max = unique_counts.reduce(function(a, b) {return Math.max(a, b)})}}
+                    else {
+
+                        // Keep Looping Until Chart Zip Codes Array has 10 Values
+                        while (chart_zips.length < 10){
+
+                            // Find Index of Current Maximum Zip Code Count
+                            zip_index = unique_counts.indexOf(current_max)
+
+                            // Add Unique Zip Code to Chart Zip Codes Array
+                            chart_zips.push(unique_codes[zip_index])
+
+                            // Add Current Maximum Zip Code Count to Chart Zip Code Counts Array
+                            chart_counts.push(current_max)
+
+                            // Replace Current Maximum Zip Code Count with Default Value
+                            unique_counts.splice(zip_index, 1, -1)
+
+                            // Set Previous Maximum Zip Code Count Equal to Current Maximum Zip Code Count
+                            previous_max = current_max
+
+                            // Find New Maximum Zip Code Count
+                            current_max = unique_counts.reduce(function(a, b) {return Math.max(a, b)})}}}}
+            else {
+
+                // Loop Through Counts in Unique Zip Code Counts Array
+                for (var count_6 = 0; count_6 < unique_counts.length; count_6++){
+
+                    // Find Index of Current Maximum Zip Code Count
+                    zip_index = unique_counts.indexOf(current_max)
+
+                    // Add Unique Zip Code to Chart Zip Codes Array
+                    chart_zips.push(unique_codes[zip_index])
+
+                    // Add Current Maximum Zip Code Count to Chart Zip Code Counts Array
+                    chart_counts.push(current_max)
+
+                    // Replace Current Maximum Zip Code Count with Default Value
+                    unique_counts.splice(zip_index, 1, -1)
+
+                    // Set previous Maximum Zip Code Count Equal to Current Maximum Zip Code Count
+                    previous_max = current_max
+
+                    // Find New Maximum Zip Code Count
+                    current_max = unique_counts.reduce(function(a, b) {return Math.max(a, b)})}}
+
+            // Define Array for Chart Colors
+            var chart_colors = []
+
+            // Loop Through Counts in Chart Zip Code Counts Array
+            for (var count_7 = 0; count_7 < chart_counts.length; count_7++){
+
+                // Add Color ID to Chart Colors Array
+                chart_colors.push(colors[count_7])}
+
+            // Define Variable for HTML Chart Container
+            var ctx_doughnut = document.getElementById('zip_chart').getContext('2d')
+
+            // Create Dictionary of Zip Code Doughnut Chart Data & Labels
+            var chart_data = {
+                labels: chart_zips,
+                datasets: [{data: chart_counts, backgroundColor: chart_colors}]}
+
+            // Define Variable for Zip Code Doughnut Chart Object
+            var Chart_1 = new Chart(ctx_doughnut, {
                 type: 'doughnut',
                 data: chart_data,
-                options: options = {legend: {display: false}}});
+                options: options = {legend: {display: true}}})
 
-            return [Chart_1, Chart_2]
-        }
 
-        function optionChanged(value){
-            if (value === "Pie Chart"){
-                charts[0].destroy()
-                charts[1].destroy()
+            // Define Array for Restaurant Names
+            var restaurant_names = []
 
-                charts = pie_chart(data)
-            }
-            else if (value === 'Bar Chart') {
-                charts[0].destroy()
-                charts[1].destroy()
+            // Loop Through Items in Imported Data
+            for (var count_8 = 0; count_8 < data.length; count_8++){
 
-                charts = bar_chart(data)
-            }
+                // Extract Restaurant Names from Each Item & Add to Restaurant Names Array
+                restaurant_names.push(data[count_8].name.toUpperCase())}
+
+            // Define Array for Unique Restaurant Names
+            var unique_restaurants = []
+
+            // Loop Through Names in Restaurant Names Array
+            for (var count_9 = 0; count_9 < restaurant_names.length; count_9++){
+
+                // Set Condition for Name Not Present in Unique Restaurant Names Array
+                if (unique_restaurants.includes(restaurant_names[count_9]) === false){
+
+                    // Add Name to Unique Names Array
+                    unique_restaurants.push(restaurant_names[count_9])}}
+
+            // Define Array for Unique Restaurant Name Counts
+            var restaurant_counts = []
+
+            // Loop Through Names in Unique Restaurant Names Array
+            for (var count_10 = 0; count_10 < unique_restaurants.length; count_10++){
+
+                // Define Counter Variable
+                var type_counter = 0
+
+                // Loop Through Names in Restaurant Names Array
+                for (var count_11 = 0; count_11 < restaurant_names.length; count_11++){
+
+                    // Set Condition for Occurrence of Unique Restaurant Name in Restaurant Names Array
+                    if (unique_restaurants[count_10] === restaurant_names[count_11]){
+
+                        // Increment Counter Variable
+                        type_counter = type_counter + 1}}
+
+                // Add Counter Variable to Unique Restaurant Name Counts Array
+                restaurant_counts.push(type_counter)}
+
+            // Define Arrays for Chart Restaurant Names & Chart Restaurant Name Counts
+            var chart_type = []
+            var chart_count = []
+
+            // Define Variables for Current & Previous Maximum Restaurant Name Count
+            var current_max = restaurant_counts.reduce(function(a, b) {return Math.max(a, b)})
+            var previous_max = 0
+
+            // Define Variable for Restaurant Name Index
+            var type_index = 0
+
+            // Set Condition for 10+ Unique Restaurant Names
+            if (restaurant_counts.length >= 10){
+
+                // Loop Through Counts in Unique Restaurant Name Counts Array
+                for (var count_12 = 0; count_12 < restaurant_counts.length; count_12++){
+
+                    // Set Condition for 10+ Chart Restaurant Names
+                    if (chart_type.length >= 10){
+
+                        // Keep Looping Until Maximum Restaurant Name Count Changes
+                        while (current_max == previous_max){
+
+                            // Find Index of Current Maximum Restaurant Name Count
+                            type_index = restaurant_counts.indexOf(current_max)
+
+                            // Add Unique Restaurant Name to Chart Restaurant Names Array
+                            chart_type.push(unique_restaurants[type_index])
+
+                            // Add Current Maximum Restaurant Name Count to Chart Restaurant Name Counts Array
+                            chart_count.push(current_max)
+
+                            // Replace Current Restaurant Name Count with Default Value
+                            restaurant_counts.splice(type_index, 1, -1)
+
+                            // Set Previous Maximum Restaurant Name Count Equal to Current Maximum Restaurant Name Count
+                            previous_max = current_max
+
+                            // Find New Maximum Restaurant Name Count
+                            current_max = restaurant_counts.reduce(function(a, b) {return Math.max(a, b)})}}
+                    else {
+
+                        // Keep Looping Until Chart Restaurant Name Array has 10 Values
+                        while (chart_type.length < 10){
+
+                            // Find Index of Current Maximum Restaurant Name Count
+                            type_index = restaurant_counts.indexOf(current_max)
+
+                            // Add Unique Restaurant Name to Chart Restaurant Names Array
+                            chart_type.push(unique_restaurants[type_index])
+
+                            // Add Current Maximum Restaurant Name Count to Chart Restaurant Name Counts Array
+                            chart_count.push(current_max)
+
+                            // Replace Current Restaurant Name Count with Default Value
+                            restaurant_counts.splice(type_index, 1, -1)
+
+                            // Set Previous Maximum Restaurant Name Count Equal to Current Maximum Restaurant Name Count
+                            previous_max = current_max
+
+                            // Find New Maximum Restaurant Name Count
+                            current_max = restaurant_counts.reduce(function(a, b) {return Math.max(a, b)})}}}}
             else {
-                charts = bar_chart(data)
-            }
-        }
 
+                // Loop Through Counts in Unique Restaurant Name Counts Array
+                for (var count_13 = 0; count_13 < restaurant_counts.length; count_13++){
+
+                    // Find Index of Current Maximum Restaurant Name Count
+                    type_index = restaurant_counts.indexOf(current_max)
+
+                    // Add Unique Restaurant Name to Chart Restaurant Names Array
+                    chart_type.push(unique_restaurants[type_index])
+
+                    // Add Current Maximum Restaurant Name Count to Chart Restaurant Name Counts Array
+                    chart_count.push(current_max)
+
+                    // Replace Current Restaurant Name Count with Default Value
+                    restaurant_counts.splice(type_index, 1, -1)
+
+                    // Set Previous Maximum Restaurant Name Count Equal to Current Maximum Restaurant Name Count
+                    previous_max = current_max
+
+                    // Find New Maximum Restaurant Name Count
+                    current_max = restaurant_counts.reduce(function(a, b) {return Math.max(a, b)})}}
+
+            // Define Array for Chart Colors
+            var chart_color = []
+
+            // Loop Through Counts in Chart Restaurant Name Counts Array
+            for (var count_14 = 0; count_14 < chart_count.length; count_14++){
+
+                // Add Color ID to Chart Colors Array
+                chart_color.push(colors[count_14])}
+
+            // Define Variable for HTML Chart Container
+            var ctx_doughnut = document.getElementById('chains_chart').getContext('2d')
+
+            // Create Dictionary of Restaurant Name Doughnut Chart Data & Labels
+            var chart_data = {
+                labels: chart_type,
+                datasets: [{data: chart_count, backgroundColor: chart_color}]}
+
+            // Define Variable for Restaurant Name Doughnut Chart Object
+            var Chart_2 = new Chart(ctx_doughnut, {
+                type: 'doughnut',
+                data: chart_data,
+                options: options = {legend: {display: true}}})
+
+            // Return Doughnut Chart Objects
+            return [Chart_1, Chart_2]}
+
+        // Define Function to Handle Dropdown Menu Changes
+        function optionChanged(value){
+
+            // Set Condition for Doughnut Chart Selection
+            if (value === "Doughnut Chart"){
+
+                // Destroy Previously Displayed Charts
+                charts[0].destroy()
+                charts[1].destroy()
+
+                // Call Function to Generate Doughnut Charts
+                charts = doughnut_chart(data, colors)}
+
+            // Set Condition for Bar Chart Selection
+            else if (value === 'Bar Chart') {
+
+                // Destroyed Previously Displayed Charts
+                charts[0].destroy()
+                charts[1].destroy()
+
+                // Call Function to Generate Bar Charts
+                charts = bar_chart(data, colors)}
+            else {
+
+                // Call Function to Generate Bar Charts
+                charts = bar_chart(data, colors)}}
+
+        // Call Function to Initialize Dashboard
         optionChanged("Start")
     </script>
 </body>
