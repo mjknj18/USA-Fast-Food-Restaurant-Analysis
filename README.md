@@ -8,7 +8,7 @@ The purpose of this project was to build an interactive dashboard from USA fast 
 
 ## Datasets
 
-
+1. https://github.com/mjknj18/USA-Fast-Food-Restaurant-Analysis/blob/master/Data/Fast_Food_Restaurants_Jun19.csv
 
 ## Tasks
 
