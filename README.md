@@ -17,6 +17,16 @@ The purpose of this project was to build an interactive dashboard from USA fast 
 
 ## Tasks
 
+### ETL Process
+
+
+
+### Application Creation
+
+
+
+### Dashboard Creation
+
 
 
 ## Results
