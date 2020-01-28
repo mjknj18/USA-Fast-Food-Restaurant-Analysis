@@ -4,7 +4,12 @@ The purpose of this project was to build an interactive dashboard from USA fast 
 
 ## Questions
 
-
+1. What are the zip codes with the most fast food restaurants in the entire country?
+2. What are the zip codes with the most fast food restaurants in each state?
+3. What are the most popular fast food restaurant chains in the entire country?
+4. What are the most popular fast food restaurant chains in each state?
+5. How are fast food restaurants distributed across the country?
+6. How are fast food restaurants distributed across each state?
 
 ## Datasets
 
