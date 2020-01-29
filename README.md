@@ -30,7 +30,7 @@ The purpose of this project was to build an interactive dashboard from USA fast 
 1. Establish a connection to the PostgreSQL database.
 2. Create the different user-selectable routes and internal functions for data processing.
 3. For each route, extract the appropriate tables from the database and convert them to JSON format.
-4. Export the converted JSON data to the aprropriate HTML web page.
+4. Export the converted JSON data to the appropriate HTML web page.
 
 ### Dashboard Creation
 
