@@ -385,7 +385,7 @@ def api_map():
     #Add JSON Object to Dictionary
     data = {'chart_data': full_map}
 
-    #Cll HTML File & Pass in Dictionary with JSON Object
+    #Call HTML File & Pass in Dictionary with JSON Object
     return render_template("index_map.html", data = data)
 
 #Define Function for State Map Routes
