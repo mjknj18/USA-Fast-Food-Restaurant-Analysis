@@ -36,15 +36,15 @@ The purpose of this project was to build an interactive dashboard from USA fast 
 
 #### Chart Visualization Web Page
 
-1. Import the JSON data passed from the Flask application.
+1. Import the JSON data from the Flask application.
 2. Filter the data to find the most common zip codes and restaurant chains.
 3. Plot the filtered data in both bar chart and doughnut chart format.
-4. Create dropdown menu to allow user to change between chart formats.
+4. Create a dropdown menu to allow the user to change displayed chart format.
 5. Attach the web page to the appropriate Flask routes.
 
 #### Map Visualization Web Page
 
-1. Import the JSON data passed from the Flask application.
+1. Import the JSON data from the Flask application.
 2. Import different map layers (outdoors/satellite/light/dark) from the Mapbox API.
 3. Select the appropriate map center coordinates and zoom level based on the imported data.
 4. Add a marker for each restaurant based on its coordinates.
