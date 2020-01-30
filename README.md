@@ -21,8 +21,8 @@ The purpose of this project was to build an interactive dashboard from USA fast 
 
 1. Import the fast food restaurant CSV data as a Pandas data frame.
 2. Clean the data frame by dropping rows and columns with missing and/or unneccessary data.
-3. Create separate data frames for each state and Washington DC.
-4. Create a PostgreSQL database, and generate tables, with the appropriate primary and foreign keys.
+3. Create separate data frames for each state and Washington, DC.
+4. Create a PostgreSQL database, and generate tables with the appropriate primary and foreign keys.
 5. Populate the tables with data from the appropriate data frames.
 
 ### Application Creation
